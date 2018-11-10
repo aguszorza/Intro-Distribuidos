@@ -2,6 +2,7 @@
 
 ### Controlador
 El controller.py debe estar en pox/ext
+
 Yo hice un hardlink para poder editar el archivo desde ambas carpetas
 
 ln ./Desktop/Intro-Distribuidos/controller.py ./pox/ext/controller.py
