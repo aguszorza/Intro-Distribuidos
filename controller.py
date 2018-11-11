@@ -40,12 +40,15 @@ class MyController(EventMixin):
 
         eth_packet = packet.find(pkt.ethernet)
         ip_packet = packet.find(pkt.ipv4)
+        ip6_packet = packet.find(pkt.ipv6)
         arp_packet = packet.find(pkt.arp)
         icmp_packet = packet.find(pkt.icmp)
         tcp_packet = packet.find(pkt.tcp)
         udp_packet = packet.find(pkt.udp)
 
         if icmp_packet is None and tcp_packet is None and udp_packet is None and arp_packet is None:
+            return
+        if ip6_packet is not None:
             return
 
         def flood():
@@ -69,12 +72,15 @@ class MyController(EventMixin):
         dst = dstEntry.dpid
 
         if (dst == dpid):
+            #current switch is destination swith
             port = dstEntry.port
         else:
-
+            #calculate all possible minnimum paths
             paths = [[neighbour] for neighbour in self.getNeighbours(dpid)]
             dsts = self.getPathsToDst(paths, dst)
             while not dsts:
+                #for each iteration, calculates all paths from src which has length n
+                #if any of those paths end in dst, finish while
                 oldPaths = paths
                 paths = []
                 for path in oldPaths:
@@ -84,7 +90,7 @@ class MyController(EventMixin):
                 dsts = self.getPathsToDst(paths, dst)
             
             #dsts has all possible minnimum paths to dst
-            dstPath = dsts[self.getHash(ip_packet, tcp_packet, udp_packet) % len(dsts)]
+            dstPath = dsts[self.getFlowHash(ip_packet, tcp_packet, udp_packet) % len(dsts)]
             port = dstPath[0].port1
 
 
@@ -121,6 +127,7 @@ class MyController(EventMixin):
 
 
     def getNeighbours(self, dpid):
+        """Returns all neighbours of switch with dpid"""
         neighbours = []
         for adjacency in core.openflow_discovery.adjacency:
             if adjacency.dpid1 == dpid:
@@ -128,13 +135,15 @@ class MyController(EventMixin):
         return neighbours
 
     def getPathsToDst(self, paths, dst):
+        """Returns all paths from list which end with dst"""
         dstPaths = []
         for path in paths:
             if path[-1].dpid2 == dst:
                 dstPaths.append(path)
         return dstPaths
 
-    def getHash(self, ip_packet, tcp_packet, udp_packet):
+    def getFlowHash(self, ip_packet, tcp_packet, udp_packet):
+        """Returns a unique fow hash"""
         number = abs(hash((ip_packet.srcip, ip_packet.dstip, ip_packet.protocol)))
 
         if tcp_packet is not None:
