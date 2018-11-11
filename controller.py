@@ -35,10 +35,32 @@ class MyController(EventMixin):
     def _handle_PacketIn(self, event):
         """ Packet processing """
         packet = event.parsed
+        dpid = event.connection.dpid
+
+        def flood():
+            #Flood incoming packet if dst is not known yet
+            #Do not update flow table
+            print "Flooding packet in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(packet.find(pkt.ethernet).dst)
+            msg = of.ofp_packet_out()
+            msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+            msg.data = event.ofp
+            msg.in_port = event.port
+            event.connection.send(msg)
 
         ip6_packet = packet.find(pkt.ipv6)
         if ip6_packet is not None:
             return
+
+        dst = core.host_tracker.getMacEntry(packet.find(pkt.ethernet).dst)
+        if dst is None:
+            return flood()
+
+        print "Calculating packet path in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(packet.find(pkt.ethernet).dst)
+        #print dpidToStr(event.connection.dpid)
+        for adjacency in core.openflow_discovery.adjacency:
+            if adjacency.dpid1 == dpid:
+                pass
+        return
 
         eth_packet = packet.find(pkt.ethernet)
         if eth_packet is not None:
@@ -67,6 +89,10 @@ def launch ():
     import pox.log
     pox.log.launch(format="[@@@bold@@@level%(name)-22s@@@reset] " +
                         "@@@bold%(message)s@@@normal")
+    import pox.log.level
+    import logging
+    pox.log.level.launch(packet=logging.WARN, host_tracker=logging.INFO)
+
     from pox.core import core
     import pox.openflow.discovery
     pox.openflow.discovery.launch()
@@ -75,3 +101,6 @@ def launch ():
 
     import pox.openflow.spanning_tree
     pox.openflow.spanning_tree.launch()
+
+    import pox.host_tracker
+    pox.host_tracker.launch()

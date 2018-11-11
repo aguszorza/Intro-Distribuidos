@@ -10,7 +10,7 @@ ln ./Desktop/Intro-Distribuidos/controller.py ./pox/ext/controller.py
 
 ## Ejecucion (terminales distintas)
 
-./pox.py controller log.level --packet=WARN
+./pox.py controller
 
 sudo mn --custom topo.py --topo topo --mac --switch ovsk --controller remote
 

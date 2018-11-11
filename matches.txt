@@ -1,0 +1,14 @@
+ofp_match attributes:
+
+in_port		Switch port number the packet arrived on
+dl_src		Ethernet source address
+dl_dst		Ethernet destination address
+dl_vlan		VLAN ID
+dl_vlan_pcp	VLAN priority
+dl_type		Ethertype / length (e.g. 0x0800 = IPv4)
+nw_tos		IP TOS/DS bits
+nw_proto	IP protocol (e.g., 6 = TCP) or lower 8 bits of ARP opcode
+nw_src		IP source address
+nw_dst		IP destination address
+tp_src		TCP/UDP source port
+tp_dst		TCP/UDP destination port
