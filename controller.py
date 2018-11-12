@@ -26,7 +26,7 @@ class MyController(EventMixin):
 
     def _handle_ConnectionUp(self, event):
         #Flood multicast packets => arp
-        print "Flooding multicast packets in switch: " + dpidToStr(event.connection.dpid)
+        log.info("Flooding multicast packets in switch: " + dpidToStr(event.connection.dpid))
         msg = of.ofp_flow_mod()
         msg.match.dl_dst = EthAddr("ff:ff:ff:ff:ff:ff")
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
@@ -55,7 +55,7 @@ class MyController(EventMixin):
             #Flood incoming packet if dst is not known yet
             #Do not update flow table
             if (arp_packet is None):
-                print "Flooding packet in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst) + '\n'
+                log.info("Flooding packet in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
             msg = of.ofp_packet_out()
             msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
             msg.data = event.ofp
@@ -67,7 +67,7 @@ class MyController(EventMixin):
         if dstEntry is None or arp_packet is not None:
             return flood()
 
-        print "Calculating packet path in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst)
+        log.info("Calculating packet path in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
 
         dst = dstEntry.dpid
 
@@ -104,15 +104,15 @@ class MyController(EventMixin):
         msg.match.nw_src = ip_packet.srcip
         msg.match.nw_dst = ip_packet.dstip
         msg.match.nw_proto = ip_packet.protocol
-        text += "IPv4: " + str(ip_packet.srcip) + " -> " + str(ip_packet.dstip) + '\n'
+        text += "IPv4: " + str(ip_packet.srcip) + " -> " + str(ip_packet.dstip)
         if tcp_packet is not None:
             msg.match.tp_src = tcp_packet.srcport
             msg.match.tp_dst = tcp_packet.dstport
-            text += "TCP: " + str(tcp_packet.srcport) + " -> " + str(tcp_packet.dstport) + '\n'
+            text += "\nTCP: " + str(tcp_packet.srcport) + " -> " + str(tcp_packet.dstport)
         if udp_packet is not None:
             msg.match.tp_src = udp_packet.srcport
             msg.match.tp_dst = udp_packet.dstport
-            text += "UDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport) + '\n'
+            text += "\nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
         msg.actions.append(of.ofp_action_output(port = port))
         event.connection.send(msg)
         print text
@@ -156,48 +156,57 @@ class MyController(EventMixin):
 
 class MyFirewall(EventMixin):
 
-    udp_max_packet = 50 * 1000
+    udp_max_packet = 100
     udp_max_block_time = 5
 
     def __init__(self):
         core.openflow.addListeners(self)
         core.openflow.addListenerByName("FlowStatsReceived", self.handle_flow_stats)
-        self.udp_flows = {}
-        self.udp_byte_count = {}
+        self.udp_packets = {}
+        self.udp_packet_count = {}
         self.dpid = 0
         self.blocked = {}
+
+        #Check stats every 5 seconds
         Timer(5, self.requestStats, recurring = True)
 
     def _handle_ConnectionUp(self, event):
-        if not self.dpid and event.dpid == 1:
+        if event.dpid == 1:
             self.dpid = event.dpid
+        #First switch, the one that is connected to client hosts
 
     def handle_flow_stats(self, event):
-        self.udp_flows = {}
-        flow_bytes = {}
+        #Check udp packets sent based in flow table statistics
+        self.udp_packets = {}
+        flow_packets = {}
         for flow in event.stats:
             ip = flow.match.nw_dst
             if ip is not None and flow.match.nw_proto == pkt.ipv4.UDP_PROTOCOL:
-                flow_bytes[ip] = flow_bytes.get(ip, 0) + flow.byte_count
+                #Count packets sent for each udp flow table entry
+                flow_packets[ip] = flow_packets.get(ip, 0) + flow.packet_count
         
-        for ip in flow_bytes.keys():
-            flow = flow_bytes[ip] - self.udp_byte_count.get(ip, 0)
-            if flow:
-                self.udp_flows[ip] = flow
-                if flow > self.udp_max_packet:
+        for ip in flow_packets.keys():
+            #Packets sent in this period is calculated
+            #Total udp packets sent - last period udp packets sent
+            packets = flow_packets[ip] - self.udp_packet_count.get(ip, 0)
+            if packets:
+                self.udp_packets[ip] = packets
+                if packets > self.udp_max_packet:
                     self.blockUdp(ip)
                 else:
                     self.unblockUdp(ip)
         
         for ip in self.blocked.keys():
-            if not ip in self.udp_flows.keys():
+            #If ip is blocked and does not have new packets sent, try to unblock
+            if not ip in self.udp_packets.keys():
                 self.unblockUdp(ip)
 
-        self.udp_byte_count = flow_bytes
+        self.udp_packet_count = flow_packets
 
 
 
     def blockUdp(self, ip):
+        #Blocks Udp packets in all switches
         blocks = self.blocked.get(ip, 0)
         if not blocks:
             msg = of.ofp_flow_mod()
@@ -205,33 +214,32 @@ class MyFirewall(EventMixin):
             msg.priority = 100
             msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
             msg.match.nw_dst = ip
-            msg.actions.append(of.ofp_action_output(port = 0))
 
             for con in core.openflow.connections:
                 con.send(msg)
 
-        log.info("Blocking UDP flows for ip src " + str(ip))
+        log.info("Blocking UDP flows for ip dst " + str(ip))
         self.blocked[ip] = self.udp_max_block_time
 
     def unblockUdp(self, ip):
         blocks = self.blocked.get(ip, 0)
 
         if blocks:
-            log.info("Trying to unblock UDP flows for ip src " + str(ip) + " : " + str(blocks))
+            log.info("Trying to unblock UDP flows for ip dst " + str(ip) + " : " + str(blocks))
 
-        if blocks == 1:
-            msg = of.ofp_flow_mod()
-            msg.match.dl_type = pkt.ethernet.IP_TYPE
-            msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
-            msg.match.nw_dst = ip
-            msg.command = of.OFPFC_DELETE
+            if blocks == 1:
+                #It was blocked for self.udp_max_block_time periods
+                msg = of.ofp_flow_mod()
+                msg.match.dl_type = pkt.ethernet.IP_TYPE
+                msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
+                msg.match.nw_dst = ip
+                msg.command = of.OFPFC_DELETE
 
-            log.info("Unblocking UDP flows for ip src " + str(ip))
+                log.info("Unblocking UDP flows for ip dst " + str(ip))
 
-            for con in core.openflow.connections:
-                con.send(msg)
-        
-        if blocks:
+                for con in core.openflow.connections:
+                    con.send(msg)
+
             self.blocked[ip] = blocks - 1
 
 
