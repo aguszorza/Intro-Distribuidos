@@ -144,12 +144,12 @@ class MyController(EventMixin):
 
     def getFlowHash(self, ip_packet, tcp_packet, udp_packet):
         """Returns a unique fow hash"""
-        number = abs(hash((ip_packet.srcip, ip_packet.dstip, ip_packet.protocol)))
+        number = abs(hash((str(ip_packet.srcip), str(ip_packet.dstip), str(ip_packet.protocol))))
 
         if tcp_packet is not None:
-            number += abs(hash((tcp_packet.srcport, tcp_packet.dstport)))
+            number += abs(hash((str(tcp_packet.srcport), str(tcp_packet.dstport))))
         if udp_packet is not None:
-            number += abs(hash((udp_packet.srcport, udp_packet.dstport)))
+            number += abs(hash((str(udp_packet.srcport), str(udp_packet.dstport))))
 
         return number
 
