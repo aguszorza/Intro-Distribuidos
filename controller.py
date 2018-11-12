@@ -8,13 +8,11 @@ import pox.lib.util as poxutil                # Various util functions
 import pox.lib.packet as pkt
 from pox.lib.revent import *                  # Event library
 import pox.lib.recoco as recoco               # Multitasking library
-from collections import defaultdict
 from pox.openflow.discovery import Discovery
 from pox.lib.util import dpidToStr
 from pox.lib.recoco import Timer
-import time
 from pox.host_tracker import host_tracker
-import random
+
 
 # Create a logger for this component
 log = core.getLogger()
@@ -250,7 +248,9 @@ class MyFirewall(EventMixin):
 
     def requestStats(self):
         if self.dpid:
-            core.openflow.sendToDPID(self.dpid, of.ofp_stats_request(body=of.ofp_flow_stats_request()))
+            connection = core.openflow.getConnection(self.dpid)
+            if connection:
+                connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
 
 
 class MyPortStats(EventMixin):
