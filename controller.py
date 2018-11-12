@@ -18,6 +18,7 @@ import random
 
 # Create a logger for this component
 log = core.getLogger()
+ports_used = {}
 
 class MyController(EventMixin):
 
@@ -31,6 +32,8 @@ class MyController(EventMixin):
         msg.match.dl_dst = EthAddr("ff:ff:ff:ff:ff:ff")
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
         event.connection.send(msg)
+
+        ports_used[event.dpid] = set()
 
 
     def _handle_PacketIn(self, event):
@@ -116,6 +119,8 @@ class MyController(EventMixin):
         msg.actions.append(of.ofp_action_output(port = port))
         event.connection.send(msg)
         print text
+
+        ports_used[dpid].add(port)
 
         #send packet
         msg = of.ofp_packet_out()
@@ -247,6 +252,32 @@ class MyFirewall(EventMixin):
         if self.dpid:
             core.openflow.sendToDPID(self.dpid, of.ofp_stats_request(body=of.ofp_flow_stats_request()))
 
+
+class MyPortStats(EventMixin):
+
+    def __init__(self):
+        #Check port stats every 10 seconds
+        Timer(10, self.check_use_of_ports, recurring = True)
+
+
+    def check_use_of_ports(self):
+        for connection in core.openflow.connections:
+            switch_ports_used = 0
+            switch_ports_total = 0
+            dpid = connection.dpid
+            for port in connection.ports:
+                if port != of.OFPP_LOCAL:
+                    switch_ports_total += 1
+                    if port in ports_used[dpid]:
+                        switch_ports_used += 1
+            if switch_ports_total == switch_ports_used:
+                text = "All ports used"
+            else:
+                text = "Ports used: " + str(switch_ports_used) + "/" + str(switch_ports_total)
+            log.info("Switch " + dpidToStr(dpid) + ": " + text)
+
+
+
 def launch ():
     import pox.log.color
     pox.log.color.launch()
@@ -270,3 +301,4 @@ def launch ():
     pox.host_tracker.launch()
 
     core.registerNew(MyFirewall)
+    core.registerNew(MyPortStats)
