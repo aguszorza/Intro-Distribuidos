@@ -154,6 +154,91 @@ class MyController(EventMixin):
         return number
 
 
+class MyFirewall(EventMixin):
+
+    udp_max_packet = 50 * 1000
+    udp_max_block_time = 5
+
+    def __init__(self):
+        core.openflow.addListeners(self)
+        core.openflow.addListenerByName("FlowStatsReceived", self.handle_flow_stats)
+        self.udp_flows = {}
+        self.udp_byte_count = {}
+        self.dpid = 0
+        self.blocked = {}
+        Timer(5, self.requestStats, recurring = True)
+
+    def _handle_ConnectionUp(self, event):
+        if not self.dpid and event.dpid == 1:
+            self.dpid = event.dpid
+
+    def handle_flow_stats(self, event):
+        self.udp_flows = {}
+        flow_bytes = {}
+        for flow in event.stats:
+            ip = flow.match.nw_dst
+            if ip is not None and flow.match.nw_proto == pkt.ipv4.UDP_PROTOCOL:
+                flow_bytes[ip] = flow_bytes.get(ip, 0) + flow.byte_count
+        
+        for ip in flow_bytes.keys():
+            flow = flow_bytes[ip] - self.udp_byte_count.get(ip, 0)
+            if flow:
+                self.udp_flows[ip] = flow
+                if flow > self.udp_max_packet:
+                    self.blockUdp(ip)
+                else:
+                    self.unblockUdp(ip)
+        
+        for ip in self.blocked.keys():
+            if not ip in self.udp_flows.keys():
+                self.unblockUdp(ip)
+
+        self.udp_byte_count = flow_bytes
+
+
+
+    def blockUdp(self, ip):
+        blocks = self.blocked.get(ip, 0)
+        if not blocks:
+            msg = of.ofp_flow_mod()
+            msg.match.dl_type = pkt.ethernet.IP_TYPE
+            msg.priority = 100
+            msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
+            msg.match.nw_dst = ip
+            msg.actions.append(of.ofp_action_output(port = 0))
+
+            for con in core.openflow.connections:
+                con.send(msg)
+
+        log.info("Blocking UDP flows for ip src " + str(ip))
+        self.blocked[ip] = self.udp_max_block_time
+
+    def unblockUdp(self, ip):
+        blocks = self.blocked.get(ip, 0)
+
+        if blocks:
+            log.info("Trying to unblock UDP flows for ip src " + str(ip) + " : " + str(blocks))
+
+        if blocks == 1:
+            msg = of.ofp_flow_mod()
+            msg.match.dl_type = pkt.ethernet.IP_TYPE
+            msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
+            msg.match.nw_dst = ip
+            msg.command = of.OFPFC_DELETE
+
+            log.info("Unblocking UDP flows for ip src " + str(ip))
+
+            for con in core.openflow.connections:
+                con.send(msg)
+        
+        if blocks:
+            self.blocked[ip] = blocks - 1
+
+
+    def requestStats(self):
+        if self.dpid:
+            core.openflow.sendToDPID(self.dpid, of.ofp_stats_request(body=of.ofp_flow_stats_request()))
+
 def launch ():
     import pox.log.color
     pox.log.color.launch()
@@ -175,3 +260,5 @@ def launch ():
 
     import pox.host_tracker
     pox.host_tracker.launch()
+
+    core.registerNew(MyFirewall)
