@@ -12,11 +12,13 @@ from pox.openflow.discovery import Discovery
 from pox.lib.util import dpidToStr
 from pox.lib.recoco import Timer
 from pox.host_tracker import host_tracker
+import random
 
 
 # Create a logger for this component
 log = core.getLogger()
 ports_used = {}
+last_port_used = {}
 
 class MyController(EventMixin):
 
@@ -71,6 +73,7 @@ class MyController(EventMixin):
         log.info("Calculating packet path in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
 
         dst = dstEntry.dpid
+        port = None
 
         if (dst == dpid):
             #current switch is destination swith
@@ -90,13 +93,28 @@ class MyController(EventMixin):
                         paths.append(path + [neighbour])
                 dsts = self.getPathsToDst(paths, dst)
             
-            #dsts has all possible minnimum paths to dst
-            dstPath = dsts[self.getFlowHash(ip_packet, tcp_packet, udp_packet) % len(dsts)]
-            port = dstPath[0].port1
+            if len(dsts) == 0:
+                return
+            if len(dsts) == 1:
+                port = dsts[0][0].port1
+
+            else:
+                #dsts has all possible minimum paths to dst
+                for dstPath in dsts:
+                    dstPort = dstPath[0].port1
+                    if not dstPort in ports_used[dpid]:
+                        #Port was not used
+                        port = dstPort
+                        break
+
+            while not port:
+                dstPort = random.choice(dsts)[0].port1
+                if dstPort != last_port_used[dpid]:
+                    port = dstPort
 
 
 
-        text = "Making rule for sending packet in switch: " + dpidToStr(event.connection.dpid) + '\n'
+        text = "Making rule for sending packet in switch: " + dpidToStr(dpid) + '\n'
         text += "Ethernet: " + str(eth_packet.src) + " -> " + str(eth_packet.dst) + '\n'
 
         #update flow table
@@ -119,6 +137,7 @@ class MyController(EventMixin):
         print text
 
         ports_used[dpid].add(port)
+        last_port_used[dpid] = port
 
         #send packet
         msg = of.ofp_packet_out()
@@ -145,16 +164,6 @@ class MyController(EventMixin):
                 dstPaths.append(path)
         return dstPaths
 
-    def getFlowHash(self, ip_packet, tcp_packet, udp_packet):
-        """Returns a unique fow hash"""
-        number = abs(hash((str(ip_packet.srcip), str(ip_packet.dstip), str(ip_packet.protocol))))
-
-        if tcp_packet is not None:
-            number += abs(hash((str(tcp_packet.srcport), str(tcp_packet.dstport))))
-        if udp_packet is not None:
-            number += abs(hash((str(udp_packet.srcport), str(udp_packet.dstport))))
-
-        return number
 
 
 class MyFirewall(EventMixin):
@@ -257,7 +266,7 @@ class MyPortStats(EventMixin):
 
     def __init__(self):
         #Check port stats every 10 seconds
-        Timer(10, self.check_use_of_ports, recurring = True)
+        Timer(20, self.check_use_of_ports, recurring = True)
 
 
     def check_use_of_ports(self):
