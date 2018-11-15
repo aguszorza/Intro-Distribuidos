@@ -182,11 +182,6 @@ class MyFirewall(EventMixin):
         #Check stats every 5 seconds
         Timer(5, self.requestStats, recurring = True)
 
-    def _handle_ConnectionUp(self, event):
-        if event.dpid == 1:
-            self.dpid = event.dpid
-        #First switch, the one that is connected to client hosts
-
     def handle_flow_stats(self, event):
         #Check udp packets sent based in flow table statistics
         self.udp_packets = {}
@@ -256,10 +251,27 @@ class MyFirewall(EventMixin):
 
 
     def requestStats(self):
-        if self.dpid:
-            connection = core.openflow.getConnection(self.dpid)
-            if connection:
-                connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
+        #Requests udp statistics from the switch that is connected to clients
+        
+        if not self.dpid:
+            host_per_switch = {}
+            for host in core.host_tracker.entryByMAC.values():
+                host_per_switch[host.dpid] = host_per_switch.get(host.dpid, 0) + 1
+
+            maxHosts = 0
+            maxHostsSwitch = 0
+            #The switch with more hosts is the one connected to clients
+            for switch, hosts in host_per_switch.items():
+                if hosts > maxHosts:
+                    maxHosts = hosts
+                    maxHostsSwitch = switch
+
+            self.dpid = maxHostsSwitch
+
+        connection = core.openflow.getConnection(self.dpid)
+        if connection:
+            log.warning(self.dpid)
+            connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
 
 
 class MyPortStats(EventMixin):
