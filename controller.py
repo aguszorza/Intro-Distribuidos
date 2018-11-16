@@ -176,15 +176,16 @@ class MyFirewall(EventMixin):
         core.openflow.addListenerByName("FlowStatsReceived", self.handle_flow_stats)
         self.udp_packets = {}
         self.udp_packet_count = {}
-        self.dpid = 0
         self.blocked = {}
+        self.unblockTried = set()
 
         #Check stats every 5 seconds
         Timer(5, self.requestStats, recurring = True)
 
     def handle_flow_stats(self, event):
         #Check udp packets sent based in flow table statistics
-        self.udp_packets = {}
+        dpid = event.dpid
+        self.udp_packets[dpid] = {}
         flow_packets = {}
         for flow in event.stats:
             ip = flow.match.nw_dst
@@ -195,9 +196,9 @@ class MyFirewall(EventMixin):
         for ip in flow_packets.keys():
             #Packets sent in this period is calculated
             #Total udp packets sent - last period udp packets sent
-            packets = flow_packets[ip] - self.udp_packet_count.get(ip, 0)
+            packets = flow_packets[ip] - self.udp_packet_count.get(dpid, {}).get(ip, 0)
             if packets:
-                self.udp_packets[ip] = packets
+                self.udp_packets[dpid][ip] = packets
                 if packets > self.udp_max_packet:
                     self.blockUdp(ip)
                 else:
@@ -205,10 +206,10 @@ class MyFirewall(EventMixin):
         
         for ip in self.blocked.keys():
             #If ip is blocked and does not have new packets sent, try to unblock
-            if not ip in self.udp_packets.keys():
+            if not ip in self.udp_packets[dpid].keys():
                 self.unblockUdp(ip)
 
-        self.udp_packet_count = flow_packets
+        self.udp_packet_count[dpid] = flow_packets
 
 
 
@@ -227,11 +228,16 @@ class MyFirewall(EventMixin):
 
         log.info("Blocking UDP flows for ip dst " + str(ip))
         self.blocked[ip] = self.udp_max_block_time
+        self.unblockTried.add(ip)
 
     def unblockUdp(self, ip):
+        if ip in self.unblockTried:
+            return
+
         blocks = self.blocked.get(ip, 0)
 
         if blocks:
+            self.unblockTried.add(ip)
             log.info("Trying to unblock UDP flows for ip dst " + str(ip) + " : " + str(blocks))
 
             if blocks == 1:
@@ -252,33 +258,18 @@ class MyFirewall(EventMixin):
 
     def requestStats(self):
         #Requests udp statistics from the switch that is connected to clients
-        
-        if not self.dpid:
-            host_per_switch = {}
-            for host in core.host_tracker.entryByMAC.values():
-                host_per_switch[host.dpid] = host_per_switch.get(host.dpid, 0) + 1
 
-            maxHosts = 0
-            maxHostsSwitch = 0
-            #The switch with more hosts is the one connected to clients
-            for switch, hosts in host_per_switch.items():
-                if hosts > maxHosts:
-                    maxHosts = hosts
-                    maxHostsSwitch = switch
+        self.unblockTried = set()
 
-            self.dpid = maxHostsSwitch
-
-        connection = core.openflow.getConnection(self.dpid)
-        if connection:
-            log.warning(self.dpid)
+        for connection in core.openflow.connections:
             connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
 
 
 class MyPortStats(EventMixin):
 
     def __init__(self):
-        #Check port stats every 10 seconds
-        Timer(20, self.check_use_of_ports, recurring = True)
+        #Check port stats every 30 seconds
+        Timer(30, self.check_use_of_ports, recurring = True)
 
 
     def check_use_of_ports(self):
