@@ -12,13 +12,11 @@ from pox.openflow.discovery import Discovery
 from pox.lib.util import dpidToStr
 from pox.lib.recoco import Timer
 from pox.host_tracker import host_tracker
-import random
 
 
 # Create a logger for this component
 log = core.getLogger()
 ports_used = {}
-last_port_used = {}
 
 class MyController(EventMixin):
 
@@ -33,7 +31,9 @@ class MyController(EventMixin):
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
         event.connection.send(msg)
 
-        ports_used[event.dpid] = set()
+        ports_used[event.dpid] = {}
+        for port in event.connection.ports:
+            ports_used[event.dpid][port] = 0
 
 
     def _handle_PacketIn(self, event):
@@ -95,22 +95,12 @@ class MyController(EventMixin):
             
             if len(dsts) == 0:
                 return
-            if len(dsts) == 1:
-                port = dsts[0][0].port1
 
             else:
                 #dsts has all possible minimum paths to dst
-                for dstPath in dsts:
-                    dstPort = dstPath[0].port1
-                    if not dstPort in ports_used[dpid]:
-                        #Port was not used
-                        port = dstPort
-                        break
+                ports = [dstPath[0].port1 for dstPath in dsts]
+                port = self.getLessUsedPort(ports, dpid)
 
-            while not port:
-                dstPort = random.choice(dsts)[0].port1
-                if dstPort != last_port_used[dpid]:
-                    port = dstPort
 
 
 
@@ -136,8 +126,7 @@ class MyController(EventMixin):
         event.connection.send(msg)
         print text
 
-        ports_used[dpid].add(port)
-        last_port_used[dpid] = port
+        ports_used[dpid][port] += 1
 
         #send packet
         msg = of.ofp_packet_out()
@@ -163,6 +152,16 @@ class MyController(EventMixin):
             if path[-1].dpid2 == dst:
                 dstPaths.append(path)
         return dstPaths
+
+    def getLessUsedPort(self, ports, dpid):
+        minUses = float('Inf')
+        minPort = 0
+        for port in ports:
+            uses = ports_used[dpid][port]
+            if uses < minUses:
+                minUses = uses
+                minPort = port
+        return minPort
 
 
 
@@ -280,7 +279,7 @@ class MyPortStats(EventMixin):
             for port in connection.ports:
                 if port != of.OFPP_LOCAL:
                     switch_ports_total += 1
-                    if port in ports_used[dpid]:
+                    if ports_used[dpid][port] > 0:
                         switch_ports_used += 1
             if switch_ports_total == switch_ports_used:
                 text = "All ports used"
