@@ -26,7 +26,7 @@ class MyController(EventMixin):
         #Flood multicast packets => arp
         log.info("Flooding multicast packets in switch: " + dpidToStr(event.connection.dpid))
         msg = of.ofp_flow_mod()
-        msg.match.dl_dst = EthAddr("ff:ff:ff:ff:ff:ff")
+        msg.match.dl_dst = pkt.ETHER_BROADCAST
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
         event.connection.send(msg)
 
@@ -98,7 +98,7 @@ class MyController(EventMixin):
             else:
                 #dsts has all possible minimum paths to dst
                 ports = [dstPath[0].port1 for dstPath in dsts]
-                port = self.getLessUsedPort(ports, dpid)
+                port = self.getLeastUsedPort(ports, dpid)
 
 
 
@@ -152,7 +152,7 @@ class MyController(EventMixin):
                 dstPaths.append(path)
         return dstPaths
 
-    def getLessUsedPort(self, ports, dpid):
+    def getLeastUsedPort(self, ports, dpid):
         minUses = float('Inf')
         minPort = 0
         for port in ports:
