@@ -1,13 +1,12 @@
 
-# Import some POX stuff
-from pox.core import core                     # Main POX object
-import pox.openflow.libopenflow_01 as of      # OpenFlow 1.0 library
-import pox.lib.packet as pkt                  # Packet parsing/construction
-from pox.lib.addresses import EthAddr, IPAddr # Address types
-import pox.lib.util as poxutil                # Various util functions
+from pox.core import core
+import pox.openflow.libopenflow_01 as of
 import pox.lib.packet as pkt
-from pox.lib.revent import *                  # Event library
-import pox.lib.recoco as recoco               # Multitasking library
+from pox.lib.addresses import EthAddr, IPAddr
+import pox.lib.util as poxutil
+import pox.lib.packet as pkt
+from pox.lib.revent import * 
+import pox.lib.recoco as recoco  
 from pox.openflow.discovery import Discovery
 from pox.lib.util import dpidToStr
 from pox.lib.recoco import Timer
