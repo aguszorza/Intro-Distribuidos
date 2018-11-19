@@ -217,9 +217,9 @@ class MyFirewall(EventMixin):
         if not blocks:
             msg = of.ofp_flow_mod()
             msg.match.dl_type = pkt.ethernet.IP_TYPE
-            msg.priority = 100
             msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
             msg.match.nw_dst = ip
+            msg.command = of.OFPFC_MODIFY
 
             for con in core.openflow.connections:
                 con.send(msg)
