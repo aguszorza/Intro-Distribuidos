@@ -62,7 +62,7 @@ fixltx2e
 \pdf_bookmarksopenlevel 1
 \pdf_breaklinks false
 \pdf_pdfborder true
-\pdf_colorlinks true
+\pdf_colorlinks false
 \pdf_backref section
 \pdf_pdfusetitle true
 \pdf_quoted_options "linkcolor=black"
