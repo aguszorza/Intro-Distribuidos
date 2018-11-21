@@ -65,7 +65,7 @@ fixltx2e
 \pdf_colorlinks true
 \pdf_backref section
 \pdf_pdfusetitle true
-\pdf_quoted_options "linkcolor=blue"
+\pdf_quoted_options "linkcolor=black"
 \papersize a4paper
 \use_geometry true
 \use_package amsmath 1
@@ -2048,10 +2048,12 @@ inline false
 status collapsed
 
 \begin_layout Plain Layout
+
 from mininet.topo import Topo
 \end_layout
 
 \begin_layout Plain Layout
+
 import sys
 \end_layout
 
@@ -2060,26 +2062,32 @@ import sys
 \end_layout
 
 \begin_layout Plain Layout
+
 class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
     def __init__(self, levels=3, hosts=3):
 \end_layout
 
 \begin_layout Plain Layout
+
         # Initialize topology
 \end_layout
 
 \begin_layout Plain Layout
+
         Topo.__init__(self)
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         switches = {}
 \end_layout
 
@@ -2088,10 +2096,12 @@ class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
         switch_number = 1
 \end_layout
 
 \begin_layout Plain Layout
+
         host_number = 1
 \end_layout
 
@@ -2100,26 +2110,32 @@ class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Add client hosts
 \end_layout
 
 \begin_layout Plain Layout
+
         switches[0] = []
 \end_layout
 
 \begin_layout Plain Layout
+
         for host in range(hosts):
 \end_layout
 
 \begin_layout Plain Layout
+
             name = 'h' + str(host_number)
 \end_layout
 
 \begin_layout Plain Layout
+
             switches[0].append(self.addHost(name))
 \end_layout
 
 \begin_layout Plain Layout
+
             host_number += 1
 \end_layout
 
@@ -2128,46 +2144,57 @@ class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Add switches
 \end_layout
 
 \begin_layout Plain Layout
+
         for level in range(levels):
 \end_layout
 
 \begin_layout Plain Layout
+
             switch_count = 2 ** level
 \end_layout
 
 \begin_layout Plain Layout
+
             switches[level+1] = []
 \end_layout
 
 \begin_layout Plain Layout
+
             for switch in range(switch_count):
 \end_layout
 
 \begin_layout Plain Layout
+
                 name = 's' + str(switch_number)
 \end_layout
 
 \begin_layout Plain Layout
+
                 addedSwitch = self.addSwitch(name)
 \end_layout
 
 \begin_layout Plain Layout
+
                 switches[level+1].append(addedSwitch)
 \end_layout
 
 \begin_layout Plain Layout
+
                 switch_number += 1
 \end_layout
 
 \begin_layout Plain Layout
+
                 for link in switches[level]:
 \end_layout
 
 \begin_layout Plain Layout
+
                     self.addLink(addedSwitch, link)
 \end_layout
 
@@ -2176,26 +2203,32 @@ class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Add server hosts
 \end_layout
 
 \begin_layout Plain Layout
+
         for switch in switches[levels]:
 \end_layout
 
 \begin_layout Plain Layout
+
             name = 'h' + str(host_number)
 \end_layout
 
 \begin_layout Plain Layout
+
             host = self.addHost(name)
 \end_layout
 
 \begin_layout Plain Layout
+
             host_number += 1
 \end_layout
 
 \begin_layout Plain Layout
+
             self.addLink(switch, host)
 \end_layout
 
@@ -2220,6 +2253,7 @@ class MyTopo(Topo):
 \end_layout
 
 \begin_layout Plain Layout
+
 topos = {'topo': (lambda levels=3, hosts=3: MyTopo(levels=levels, hosts=hosts))}
 \end_layout
 
@@ -2259,50 +2293,62 @@ inline false
 status collapsed
 
 \begin_layout Plain Layout
+
 from pox.core import core
 \end_layout
 
 \begin_layout Plain Layout
+
 import pox.openflow.libopenflow_01 as of
 \end_layout
 
 \begin_layout Plain Layout
+
 import pox.lib.packet as pkt
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.lib.addresses import EthAddr, IPAddr
 \end_layout
 
 \begin_layout Plain Layout
+
 import pox.lib.util as poxutil
 \end_layout
 
 \begin_layout Plain Layout
+
 import pox.lib.packet as pkt
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.lib.revent import * 
 \end_layout
 
 \begin_layout Plain Layout
+
 import pox.lib.recoco as recoco  
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.openflow.discovery import Discovery
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.lib.util import dpidToStr
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.lib.recoco import Timer
 \end_layout
 
 \begin_layout Plain Layout
+
 from pox.host_tracker import host_tracker
 \end_layout
 
@@ -2315,14 +2361,17 @@ from pox.host_tracker import host_tracker
 \end_layout
 
 \begin_layout Plain Layout
+
 # Create a logger for this component
 \end_layout
 
 \begin_layout Plain Layout
+
 log = core.getLogger()
 \end_layout
 
 \begin_layout Plain Layout
+
 ports_used = {}
 \end_layout
 
@@ -2331,6 +2380,7 @@ ports_used = {}
 \end_layout
 
 \begin_layout Plain Layout
+
 class MyController(EventMixin):
 \end_layout
 
@@ -2339,10 +2389,12 @@ class MyController(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def __init__ (self):
 \end_layout
 
 \begin_layout Plain Layout
+
         core.openflow.addListeners(self)
 \end_layout
 
@@ -2351,83 +2403,103 @@ class MyController(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def _handle_ConnectionUp(self, event):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Flood multicast packets => arp
 \end_layout
 
 \begin_layout Plain Layout
+
         log.info("Flooding multicast and arp packets in switch: " + dpidToStr(eve
 nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         #multicast
 \end_layout
 
 \begin_layout Plain Layout
+
         msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.dl_dst = pkt.ETHER_BROADCAST
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
 \end_layout
 
 \begin_layout Plain Layout
+
         event.connection.send(msg)
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         #arp
 \end_layout
 
 \begin_layout Plain Layout
+
         msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.dl_type = pkt.ethernet.ARP_TYPE
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
 \end_layout
 
 \begin_layout Plain Layout
+
         event.connection.send(msg)
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         #drop ipv6 packets because they are strange and broken
 \end_layout
 
 \begin_layout Plain Layout
+
         msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.dl_type = pkt.ethernet.IPV6_TYPE
 \end_layout
 
 \begin_layout Plain Layout
+
         event.connection.send(msg)
 \end_layout
 
@@ -2436,14 +2508,17 @@ nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
         ports_used[event.dpid] = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         for port in event.connection.ports:
 \end_layout
 
 \begin_layout Plain Layout
+
             ports_used[event.dpid][port] = 0
 \end_layout
 
@@ -2456,18 +2531,22 @@ nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
     def _handle_PacketIn(self, event):
 \end_layout
 
 \begin_layout Plain Layout
+
         """ Packet processing """
 \end_layout
 
 \begin_layout Plain Layout
+
         packet = event.parsed
 \end_layout
 
 \begin_layout Plain Layout
+
         dpid = event.connection.dpid
 \end_layout
 
@@ -2476,22 +2555,27 @@ nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
         eth_packet = packet.find(pkt.ethernet)
 \end_layout
 
 \begin_layout Plain Layout
+
         ip_packet = packet.find(pkt.ipv4)
 \end_layout
 
 \begin_layout Plain Layout
+
         icmp_packet = packet.find(pkt.icmp)
 \end_layout
 
 \begin_layout Plain Layout
+
         tcp_packet = packet.find(pkt.tcp)
 \end_layout
 
 \begin_layout Plain Layout
+
         udp_packet = packet.find(pkt.udp)
 \end_layout
 
@@ -2500,11 +2584,13 @@ nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
         if icmp_packet is None and tcp_packet is None and udp_packet is
  None:
 \end_layout
 
 \begin_layout Plain Layout
+
             return
 \end_layout
 
@@ -2513,39 +2599,48 @@ nt.connection.dpid))
 \end_layout
 
 \begin_layout Plain Layout
+
         def flood():
 \end_layout
 
 \begin_layout Plain Layout
+
             #Flood incoming packet if dst is not known yet
 \end_layout
 
 \begin_layout Plain Layout
+
             #Do not update flow table
 \end_layout
 
 \begin_layout Plain Layout
+
             log.info("Flooding packet in switch: " + dpidToStr(event.connection.dpi
 d) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
             msg = of.ofp_packet_out()
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.data = event.ofp
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.in_port = event.port
 \end_layout
 
 \begin_layout Plain Layout
+
             event.connection.send(msg)
 \end_layout
 
@@ -2558,14 +2653,17 @@ d) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
         dstEntry = core.host_tracker.getMacEntry(eth_packet.dst)
 \end_layout
 
 \begin_layout Plain Layout
+
         if dstEntry is None:
 \end_layout
 
 \begin_layout Plain Layout
+
             return flood()
 \end_layout
 
@@ -2574,6 +2672,7 @@ d) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
         log.info("Calculating packet path in switch: " + dpidToStr(event.connectio
 n.dpid) + " --- dst=" + str(eth_packet.dst))
 \end_layout
@@ -2583,10 +2682,12 @@ n.dpid) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
         dst = dstEntry.dpid
 \end_layout
 
 \begin_layout Plain Layout
+
         port = None
 \end_layout
 
@@ -2595,83 +2696,103 @@ n.dpid) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
         if (dst == dpid):
 \end_layout
 
 \begin_layout Plain Layout
+
             #current switch is destination swith
 \end_layout
 
 \begin_layout Plain Layout
+
             port = dstEntry.port
 \end_layout
 
 \begin_layout Plain Layout
+
         else:
 \end_layout
 
 \begin_layout Plain Layout
+
             #calculate all possible minnimum paths
 \end_layout
 
 \begin_layout Plain Layout
+
             paths = [[neighbour] for neighbour in self.getNeighbours(dpid)]
 \end_layout
 
 \begin_layout Plain Layout
+
             dsts = self.getPathsToDst(paths, dst)
 \end_layout
 
 \begin_layout Plain Layout
+
             while not dsts:
 \end_layout
 
 \begin_layout Plain Layout
+
                 #for each iteration, calculates all paths from src which
  has length n
 \end_layout
 
 \begin_layout Plain Layout
+
                 #if any of those paths end in dst, finish while
 \end_layout
 
 \begin_layout Plain Layout
+
                 oldPaths = paths
 \end_layout
 
 \begin_layout Plain Layout
+
                 paths = []
 \end_layout
 
 \begin_layout Plain Layout
+
                 for path in oldPaths:
 \end_layout
 
 \begin_layout Plain Layout
+
                     neighbours = self.getNeighbours(path[-1].dpid2)
 \end_layout
 
 \begin_layout Plain Layout
+
                     for neighbour in neighbours:
 \end_layout
 
 \begin_layout Plain Layout
+
                         paths.append(path + [neighbour])
 \end_layout
 
 \begin_layout Plain Layout
+
                 dsts = self.getPathsToDst(paths, dst)
 \end_layout
 
 \begin_layout Plain Layout
+
             
 \end_layout
 
 \begin_layout Plain Layout
+
             if len(dsts) == 0:
 \end_layout
 
 \begin_layout Plain Layout
+
                 return
 \end_layout
 
@@ -2680,18 +2801,22 @@ n.dpid) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
             else:
 \end_layout
 
 \begin_layout Plain Layout
+
                 #dsts has all possible minimum paths to dst
 \end_layout
 
 \begin_layout Plain Layout
+
                 ports = [dstPath[0].port1 for dstPath in dsts]
 \end_layout
 
 \begin_layout Plain Layout
+
                 port = self.getLeastUsedPort(ports, dpid)
 \end_layout
 
@@ -2712,6 +2837,7 @@ n.dpid) + " --- dst=" + str(eth_packet.dst))
 \end_layout
 
 \begin_layout Plain Layout
+
         text = "Making rule for sending packet in switch: " + dpidToStr(dpid)
  + '
 \backslash
@@ -2719,6 +2845,7 @@ n'
 \end_layout
 
 \begin_layout Plain Layout
+
         text += "Ethernet: " + str(eth_packet.src) + " -> " + str(eth_packet.dst)
  + '
 \backslash
@@ -2730,78 +2857,96 @@ n'
 \end_layout
 
 \begin_layout Plain Layout
+
         #update flow table
 \end_layout
 
 \begin_layout Plain Layout
+
         msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.dl_type = eth_packet.type
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.nw_src = ip_packet.srcip
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.nw_dst = ip_packet.dstip
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.match.nw_proto = ip_packet.protocol
 \end_layout
 
 \begin_layout Plain Layout
+
         text += "IPv4: " + str(ip_packet.srcip) + " -> " + str(ip_packet.dstip)
 \end_layout
 
 \begin_layout Plain Layout
+
         if tcp_packet is not None:
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.tp_src = tcp_packet.srcport
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.tp_dst = tcp_packet.dstport
 \end_layout
 
 \begin_layout Plain Layout
+
             text += "
 \backslash
 nTCP: " + str(tcp_packet.srcport) + " -> " + str(tcp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
         if udp_packet is not None:
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.tp_src = udp_packet.srcport
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.tp_dst = udp_packet.dstport
 \end_layout
 
 \begin_layout Plain Layout
+
             text += "
 \backslash
 nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.actions.append(of.ofp_action_output(port = port))
 \end_layout
 
 \begin_layout Plain Layout
+
         event.connection.send(msg)
 \end_layout
 
 \begin_layout Plain Layout
+
         print text
 \end_layout
 
@@ -2810,6 +2955,7 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
         ports_used[dpid][port] += 1
 \end_layout
 
@@ -2818,26 +2964,32 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
         #send packet
 \end_layout
 
 \begin_layout Plain Layout
+
         msg = of.ofp_packet_out()
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.actions.append(of.ofp_action_output(port = port))
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.data = event.ofp
 \end_layout
 
 \begin_layout Plain Layout
+
         msg.in_port = event.port
 \end_layout
 
 \begin_layout Plain Layout
+
         event.connection.send(msg)
 \end_layout
 
@@ -2854,30 +3006,37 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
     def getNeighbours(self, dpid):
 \end_layout
 
 \begin_layout Plain Layout
+
         """Returns all neighbours of switch with dpid"""
 \end_layout
 
 \begin_layout Plain Layout
+
         neighbours = []
 \end_layout
 
 \begin_layout Plain Layout
+
         for adjacency in core.openflow_discovery.adjacency:
 \end_layout
 
 \begin_layout Plain Layout
+
             if adjacency.dpid1 == dpid:
 \end_layout
 
 \begin_layout Plain Layout
+
                 neighbours.append(adjacency)
 \end_layout
 
 \begin_layout Plain Layout
+
         return neighbours
 \end_layout
 
@@ -2886,30 +3045,37 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
     def getPathsToDst(self, paths, dst):
 \end_layout
 
 \begin_layout Plain Layout
+
         """Returns all paths from list which end with dst"""
 \end_layout
 
 \begin_layout Plain Layout
+
         dstPaths = []
 \end_layout
 
 \begin_layout Plain Layout
+
         for path in paths:
 \end_layout
 
 \begin_layout Plain Layout
+
             if path[-1].dpid2 == dst:
 \end_layout
 
 \begin_layout Plain Layout
+
                 dstPaths.append(path)
 \end_layout
 
 \begin_layout Plain Layout
+
         return dstPaths
 \end_layout
 
@@ -2918,38 +3084,47 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
     def getLeastUsedPort(self, ports, dpid):
 \end_layout
 
 \begin_layout Plain Layout
+
         minUses = float('Inf')
 \end_layout
 
 \begin_layout Plain Layout
+
         minPort = 0
 \end_layout
 
 \begin_layout Plain Layout
+
         for port in ports:
 \end_layout
 
 \begin_layout Plain Layout
+
             uses = ports_used[dpid][port]
 \end_layout
 
 \begin_layout Plain Layout
+
             if uses < minUses:
 \end_layout
 
 \begin_layout Plain Layout
+
                 minUses = uses
 \end_layout
 
 \begin_layout Plain Layout
+
                 minPort = port
 \end_layout
 
 \begin_layout Plain Layout
+
         return minPort
 \end_layout
 
@@ -2966,6 +3141,7 @@ nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
 \end_layout
 
 \begin_layout Plain Layout
+
 class MyFirewall(EventMixin):
 \end_layout
 
@@ -2974,10 +3150,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     udp_max_packet = 100
 \end_layout
 
 \begin_layout Plain Layout
+
     udp_max_block_time = 5
 \end_layout
 
@@ -2986,31 +3164,38 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def __init__(self):
 \end_layout
 
 \begin_layout Plain Layout
+
         core.openflow.addListeners(self)
 \end_layout
 
 \begin_layout Plain Layout
+
         core.openflow.addListenerByName("FlowStatsReceived", self.handle_flow_stats
 )
 \end_layout
 
 \begin_layout Plain Layout
+
         self.udp_packets = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         self.udp_packet_count = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         self.blocked = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         self.unblockTried = set()
 \end_layout
 
@@ -3019,10 +3204,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Check stats every 5 seconds
 \end_layout
 
 \begin_layout Plain Layout
+
         Timer(5, self.requestStats, recurring = True)
 \end_layout
 
@@ -3031,108 +3218,134 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def handle_flow_stats(self, event):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Check udp packets sent based in flow table statistics
 \end_layout
 
 \begin_layout Plain Layout
+
         dpid = event.dpid
 \end_layout
 
 \begin_layout Plain Layout
+
         self.udp_packets[dpid] = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         flow_packets = {}
 \end_layout
 
 \begin_layout Plain Layout
+
         for flow in event.stats:
 \end_layout
 
 \begin_layout Plain Layout
+
             ip = flow.match.nw_dst
 \end_layout
 
 \begin_layout Plain Layout
+
             if ip is not None and flow.match.nw_proto == pkt.ipv4.UDP_PROTOCOL:
 \end_layout
 
 \begin_layout Plain Layout
+
                 #Count packets sent for each udp flow table entry
 \end_layout
 
 \begin_layout Plain Layout
+
                 flow_packets[ip] = flow_packets.get(ip, 0) + flow.packet_count
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         for ip in flow_packets.keys():
 \end_layout
 
 \begin_layout Plain Layout
+
             #Packets sent in this period is calculated
 \end_layout
 
 \begin_layout Plain Layout
+
             #Total udp packets sent - last period udp packets sent
 \end_layout
 
 \begin_layout Plain Layout
+
             packets = flow_packets[ip] - self.udp_packet_count.get(dpid, {}).get(ip
 , 0)
 \end_layout
 
 \begin_layout Plain Layout
+
             if packets:
 \end_layout
 
 \begin_layout Plain Layout
+
                 self.udp_packets[dpid][ip] = packets
 \end_layout
 
 \begin_layout Plain Layout
+
                 if packets > self.udp_max_packet:
 \end_layout
 
 \begin_layout Plain Layout
+
                     self.blockUdp(ip)
 \end_layout
 
 \begin_layout Plain Layout
+
                 else:
 \end_layout
 
 \begin_layout Plain Layout
+
                     self.unblockUdp(ip)
 \end_layout
 
 \begin_layout Plain Layout
+
         
 \end_layout
 
 \begin_layout Plain Layout
+
         for ip in self.blocked.keys():
 \end_layout
 
 \begin_layout Plain Layout
+
             #If ip is blocked and does not have new packets sent, try to
  unblock
 \end_layout
 
 \begin_layout Plain Layout
+
             if not ip in self.udp_packets[dpid].keys():
 \end_layout
 
 \begin_layout Plain Layout
+
                 self.unblockUdp(ip)
 \end_layout
 
@@ -3141,6 +3354,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         self.udp_packet_count[dpid] = flow_packets
 \end_layout
 
@@ -3157,38 +3371,47 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def blockUdp(self, ip):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Blocks Udp packets in all switches
 \end_layout
 
 \begin_layout Plain Layout
+
         blocks = self.blocked.get(ip, 0)
 \end_layout
 
 \begin_layout Plain Layout
+
         if not blocks:
 \end_layout
 
 \begin_layout Plain Layout
+
             msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.dl_type = pkt.ethernet.IP_TYPE
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.match.nw_dst = ip
 \end_layout
 
 \begin_layout Plain Layout
+
             msg.priority = of.OFP_DEFAULT_PRIORITY + 1
 \end_layout
 
@@ -3197,10 +3420,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
             for con in core.openflow.connections:
 \end_layout
 
 \begin_layout Plain Layout
+
                 con.send(msg)
 \end_layout
 
@@ -3209,10 +3434,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
                 
 \end_layout
 
 \begin_layout Plain Layout
+
             
 \end_layout
 
@@ -3221,14 +3448,17 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         log.info("Blocking UDP flows for ip dst " + str(ip))
 \end_layout
 
 \begin_layout Plain Layout
+
         self.blocked[ip] = self.udp_max_block_time
 \end_layout
 
 \begin_layout Plain Layout
+
         self.unblockTried.add(ip)
 \end_layout
 
@@ -3237,14 +3467,17 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def unblockUdp(self, ip):
 \end_layout
 
 \begin_layout Plain Layout
+
         if ip in self.unblockTried:
 \end_layout
 
 \begin_layout Plain Layout
+
             return
 \end_layout
 
@@ -3253,6 +3486,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         blocks = self.blocked.get(ip, 0)
 \end_layout
 
@@ -3261,14 +3495,17 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         if blocks:
 \end_layout
 
 \begin_layout Plain Layout
+
             self.unblockTried.add(ip)
 \end_layout
 
 \begin_layout Plain Layout
+
             log.info("Trying to unblock UDP flows for ip dst " + str(ip)
  + " : " + str(blocks))
 \end_layout
@@ -3278,30 +3515,37 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
             if blocks == 1:
 \end_layout
 
 \begin_layout Plain Layout
+
                 #It was blocked for self.udp_max_block_time periods
 \end_layout
 
 \begin_layout Plain Layout
+
                 msg = of.ofp_flow_mod()
 \end_layout
 
 \begin_layout Plain Layout
+
                 msg.match.dl_type = pkt.ethernet.IP_TYPE
 \end_layout
 
 \begin_layout Plain Layout
+
                 msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
 \end_layout
 
 \begin_layout Plain Layout
+
                 msg.match.nw_dst = ip
 \end_layout
 
 \begin_layout Plain Layout
+
                 msg.command = of.OFPFC_DELETE
 \end_layout
 
@@ -3310,6 +3554,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
                 log.info("Unblocking UDP flows for ip dst " + str(ip))
 \end_layout
 
@@ -3318,10 +3563,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
                 for con in core.openflow.connections:
 \end_layout
 
 \begin_layout Plain Layout
+
                     con.send(msg)
 \end_layout
 
@@ -3330,6 +3577,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
             self.blocked[ip] = blocks - 1
 \end_layout
 
@@ -3342,10 +3590,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def requestStats(self):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Requests udp statistics from the switch that is connected to clients
 \end_layout
 
@@ -3354,6 +3604,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         self.unblockTried = set()
 \end_layout
 
@@ -3362,10 +3613,12 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
         for connection in core.openflow.connections:
 \end_layout
 
 \begin_layout Plain Layout
+
             connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
 \end_layout
 
@@ -3378,6 +3631,7 @@ class MyFirewall(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
 class MyPortStats(EventMixin):
 \end_layout
 
@@ -3386,14 +3640,17 @@ class MyPortStats(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def __init__(self):
 \end_layout
 
 \begin_layout Plain Layout
+
         #Check port stats every 30 seconds
 \end_layout
 
 \begin_layout Plain Layout
+
         Timer(30, self.check_use_of_ports, recurring = True)
 \end_layout
 
@@ -3406,63 +3663,78 @@ class MyPortStats(EventMixin):
 \end_layout
 
 \begin_layout Plain Layout
+
     def check_use_of_ports(self):
 \end_layout
 
 \begin_layout Plain Layout
+
         for connection in core.openflow.connections:
 \end_layout
 
 \begin_layout Plain Layout
+
             switch_ports_used = 0
 \end_layout
 
 \begin_layout Plain Layout
+
             switch_ports_total = 0
 \end_layout
 
 \begin_layout Plain Layout
+
             dpid = connection.dpid
 \end_layout
 
 \begin_layout Plain Layout
+
             for port in connection.ports:
 \end_layout
 
 \begin_layout Plain Layout
+
                 if port != of.OFPP_LOCAL:
 \end_layout
 
 \begin_layout Plain Layout
+
                     switch_ports_total += 1
 \end_layout
 
 \begin_layout Plain Layout
+
                     if ports_used[dpid][port] > 0:
 \end_layout
 
 \begin_layout Plain Layout
+
                         switch_ports_used += 1
 \end_layout
 
 \begin_layout Plain Layout
+
             if switch_ports_total == switch_ports_used:
 \end_layout
 
 \begin_layout Plain Layout
+
                 text = "All ports used"
 \end_layout
 
 \begin_layout Plain Layout
+
             else:
 \end_layout
 
 \begin_layout Plain Layout
+
                 text = "Ports used: " + str(switch_ports_used) + "/" + str(switc
 h_ports_total)
 \end_layout
 
 \begin_layout Plain Layout
+
             log.info("Switch " + dpidToStr(dpid) + ": " + text)
 \end_layout
 
@@ -3479,38 +3751,47 @@ h_ports_total)
 \end_layout
 
 \begin_layout Plain Layout
+
 def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.log.color
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.log.color.launch()
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.log
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.log.launch(format="[@@@bold@@@level%(name)-22s@@@reset] " +
 \end_layout
 
 \begin_layout Plain Layout
+
                         "@@@bold%(message)s@@@normal")
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.log.level
 \end_layout
 
 \begin_layout Plain Layout
+
     import logging
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.log.level.launch(packet=logging.WARN, host_tracker=logging.INFO)
 \end_layout
 
@@ -3519,14 +3800,17 @@ def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     from pox.core import core
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.openflow.discovery
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.openflow.discovery.launch()
 \end_layout
 
@@ -3535,6 +3819,7 @@ def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     core.registerNew(MyController)
 \end_layout
 
@@ -3543,10 +3828,12 @@ def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.openflow.spanning_tree
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.openflow.spanning_tree.launch()
 \end_layout
 
@@ -3555,10 +3842,12 @@ def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     import pox.host_tracker
 \end_layout
 
 \begin_layout Plain Layout
+
     pox.host_tracker.launch()
 \end_layout
 
@@ -3567,10 +3856,12 @@ def launch ():
 \end_layout
 
 \begin_layout Plain Layout
+
     core.registerNew(MyFirewall)
 \end_layout
 
 \begin_layout Plain Layout
+
     core.registerNew(MyPortStats)
 \end_layout
 
