@@ -1,0 +1,3671 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\date{}
+\usepackage{float}
+\usepackage{units}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{esint}
+%\numberwithin{figure}{section}
+%\numberwithin{table}{section}
+%\numberwithin{equation}{section}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{xcolor}
+%-------------------------------------------------------------------------------
+%Modificaciones de leyendas en figuras
+%\usepackage[footnotesize, labelsep=quad]{caption}
+%\captionsetup{width=0.8\textwidth }
+\usepackage{caption}
+\captionsetup[figure]{margin=40pt,font=normalsize,labelfont=bf}
+\captionsetup[table]{margin=40pt,font=normalsize,labelfont=bf} 
+%-------------------------------------------------------------------------------
+% Added by lyx2lyx
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+tcolorbox
+fixltx2e
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format pdf2
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_author "Agustín Zorzano"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref section
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=blue"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 1.5cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Left Header
+Introducción a los Sistemas Distribuidos (75.43)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{titlepage}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[scale=0.5]{fiuba.png}
+\backslash
+
+\backslash
+[1.5cm]    
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{
+\backslash
+Large Facultad de Ingeniería - U.B.A.}
+\backslash
+
+\backslash
+[1.5cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{
+\backslash
+Large 75.43 Inroducción a los Sistemas Distribuidos}
+\backslash
+
+\backslash
+[.05cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{
+\backslash
+small 2do.
+ Cuatrimestre de 2018}
+\backslash
+
+\backslash
+[3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+ { 
+\backslash
+Huge 
+\backslash
+bfseries Trabajo Práctico 3: Enlace}
+\backslash
+
+\backslash
+[3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{
+\backslash
+small Matias Feld, Padrón: 99170}
+\backslash
+
+\backslash
+[.05cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{
+\backslash
+small Agustín Zorzano, Padrón: 99224}
+\backslash
+
+\backslash
+[.05cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+% Bottom of the page {
+\backslash
+large 
+\backslash
+today}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{titlepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introducción teórica
+\end_layout
+
+\begin_layout Standard
+En la actualidad existe una gran cantidad de redes conformadas por switches
+ y routers.
+ Estas redes pueden ser de distintas dimensiones, topologías y complejidades.
+ Además, las redes pueden cambiar a lo largo del tiempo, ya sea por cambios
+ en los dispositivos de la red (por ejemplo el agregado de dispositivos)
+ o por cambios manuales (por ejemplo decidir realizar Blackholing debido
+ a un ataque).
+\end_layout
+
+\begin_layout Standard
+Uno de los problemas que pueden tener las redes es la gran cantidad de dispositi
+vos y la diversidad de fabricantes de éstos.
+ Esto último trae como inconveniente que la configuración de cada dispositivo
+ utiliza un protocolo diferente que depende del fabricante.
+ Esto significa que para realizar alguna acción específica a la red, se
+ deberá implementar para cada dispositivo un script distinto con su protocolo
+ específico.
+ Es debido a éste inconveniente, que aparecieron las SDN (Software-defined
+ Networking) con la intención de facilitar e integrar el manejo administrativo
+ de los dispositivos.
+ Para ésto se generó una API (OpenFlow) que se maneja con un protocolo estándar
+ y que luego lo traduce al protocolo específico de cada dispositivo.
+\end_layout
+
+\begin_layout Standard
+Openflow propone la presencia de un controlador.
+ El controlador es un elemento externo que interactúa a través de OpenFlow
+ y se encarga de agregar o quitar entradas de la tabla del dispositivo.
+ Este controlador puede optimizar el uso de la red, especialmente si se
+ la compara con la utilización de Spanning Tree, ya que el controlador podrá
+ utilizar todos los enlaces disponibles haciendo balance de cargas cuando
+ hace el envío de paquetes (pues no tiene puertos bloqueados) y al mismo
+ tiempo se evita el fenómeno de flooding por broadcast pues el controlador
+ realizará spanning tree únicamente para el envío de estos mensajes.
+ Además, permite realizar ingeniería de tráfico, ya que puede analizar cada
+ paquete por separado y establecer distintos caminos para cada flujo.
+\end_layout
+
+\begin_layout Section
+Objetivo
+\end_layout
+
+\begin_layout Standard
+El objetivo de este trabajo es la simulación y emulación de un pequeño datacente
+r, cuya red será una SDN.
+ La topología utilizada para la construcción del datacenter será fat-tree.
+ Se implementará un controlador que permita manejar el direccionamiento
+ de paquetes dentro de la red, y un firewall que permita mitigar ataques
+ DOS.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Desarrollo
+\end_layout
+
+\begin_layout Subsection
+Preguntas a responder
+\end_layout
+
+\begin_layout Enumerate
+¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Los switch son dispositivos de capa 2 mientras que los routers son dispositivos
+ de capa 3.
+\end_layout
+
+\begin_layout Itemize
+Los routers conectan dos redes distintas mientras que los switches son parte
+ de un misma red.
+\end_layout
+
+\begin_layout Itemize
+Los switches son transparentes para la red mientras que los routers no.
+ 
+\end_layout
+
+\begin_layout Itemize
+Los routers tienen dirección IP, pero los switches no tienen dirección MAC.
+\end_layout
+
+\begin_layout Itemize
+Como los switches son de capa 2, pueden realizar retransmisiones mientras
+ que los routers no (pues IP no tiene retransmisión).
+\end_layout
+
+\begin_layout Itemize
+Cuando un paquete llega a un router y éste no sabe qué hacer con él (la
+ dirección IP destino no matchea con ninguna entrada de la tabla), el router
+ lo descarta.
+ En cambio, si un frame llega a un switch y éste no sabe qué hacer (la dirección
+ MAC destino no se encuentra en la tabla del switch), envía un mensaje broadcast
+ a todos los dispositivos para detectar a qué switch enviarlo.
+ 
+\end_layout
+
+\begin_layout Itemize
+En ambos casos, los dispositivos tienen una tabla que utilizan para determinar
+ la interfaz de salida.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Los switches convencionales tienen distintos protocolos de configuración
+ dependiendo del fabricante.
+ Por otro lado, los switches OpenFlow son switches convencionales que entienden
+ un único protocolo de configuración, que luego lo traducirá al protocolo
+ propio del fabricante.
+ Ésto permite una comunicación unificada con todos los switches.
+\begin_inset Newline newline
+\end_inset
+
+Los switches openflow se comunican con el controlador cuando no saben qué
+ hacer con un paquete, y el controlador decide por el.
+ En cambio, los switches normales deben decidir todo, y si no saben qué
+ hacer envían el paquete por todas las interfaces.
+\end_layout
+
+\begin_layout Enumerate
+¿Se pueden reemplazar todos los routers de la Internet por Switches OpenFlow?
+ Piense en el escenario interASes para elaborar su respuesta.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Para todos los routers internos de un AS no habría problema, ya que el controlad
+or conoce toda la red y le indicará a cada uno cómo actuar frente a cada
+ paquete.
+\begin_inset Newline newline
+\end_inset
+
+Con respecto a los routers interASes, podrían reemplazarse por switches
+ OpenFlow, siempre y cuando el controlador sea capaz de ejecutar el protocolo
+ BGP.
+\begin_inset Newline newline
+\end_inset
+
+Por un lado, el controlador debería analizar todos los mensajes BGP que
+ se reciben, para poder informarle a toda la red las direcciones IP con
+ las que pueden comunicarse.
+ Por otro lado, el controlador también debe encargarse de, cada cierto tiempo,
+ enviar los mensajes BGP a sus vecinos, como lo haría un router normal.
+\begin_inset Newline newline
+\end_inset
+
+De esta forma, a través del controlador se podrían realizar todas las decisiones
+ que permite el protocolo BGP, como por ejemplo la discrecionalidad en los
+ anuncios de prefijos o elegir un camino en base al local preference.
+\end_layout
+
+\begin_layout Subsection
+Topología
+\end_layout
+
+\begin_layout Standard
+La topología utilizada para el datacenter será fat-tree.
+ Esta topología consiste en varios niveles, cada uno con el doble de switches
+ que el anterior, donde todos los switches de un nivel están conectados
+ con todos los switches del siguiente nivel.
+ Además, cada switch que se encuentre en el último nivel estará conectado
+ a un host proveedor de servicios, y el switch correspondiente al primer
+ nivel estará conectado a todos los host clientes.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Topología-Fat-Tree"
+
+\end_inset
+
+ se muestra una topología con tres niveles:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/Topologia/Fat tree.png
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Topología-Fat-Tree"
+
+\end_inset
+
+Topología Fat-Tree
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Particularmente en la implementación realizada, se admite una cantidad variable
+ y parametrizable tanto de niveles como de hosts clientes.
+\end_layout
+
+\begin_layout Standard
+La cantidad de hosts clientes determina cuántos son los hosts conectados
+ al switch que se encuentra en el nivel superior.
+ Por defecto tiene un valor de 3.
+\end_layout
+
+\begin_layout Standard
+La cantidad de niveles determina cuántos niveles de switches tendrá la topología
+, donde cada nivel tendrá 
+\begin_inset Formula $2^{n-1}$
+\end_inset
+
+ switches (n es el número de nivel, comenzando en 1).
+ Por defecto la topología tendrá 3 niveles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para ejecutar la topología con los valores por defecto en mininet, se puede
+ utilizar el siguiente comando:
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,basicstyle={\footnotesize\ttfamily},breaklines=true,tabsize=4,backgroundcolor={\color{lightgray}},frame=box"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sudo mn --custom topo.py --topo topo --mac --switch ovsk --controller remote
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para cambiar los valores por defecto, por ejemplo 2 hosts clientes y 4 niveles,
+ se puede utilizar el siguiente comando:
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,basicstyle={\footnotesize\ttfamily},breaklines=true,tabsize=4,backgroundcolor={\color{lightgray}},frame=box"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sudo mn --custom topo.py --topo topo,levels=4,hosts=2 --mac --switch ovsk
+ --controller remote
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En todo el desarrollo a partir de este punto se utilizarán los valores por
+ defecto de la topología, salvo que se indique lo contrario.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una vez inicializada la topología, utilizamos los comandos dump y links
+ de mininet para obtener datos de la red generada, que luego se utilizaron
+ en la herramienta online Narmox Spear​[
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:narmox_spear"
+
+\end_inset
+
+] para graficar la topología de la red.
+ De esta forma, se pudo verificar que la topología se creó correctamente.
+ La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Topología-Fat-Tree-emulada"
+
+\end_inset
+
+ muestra la topología obtenida.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/Topologia/topologia.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Topología-Fat-Tree-emulada"
+
+\end_inset
+
+Topología Fat-Tree emulada
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se puede ver que la topología se creó correctamente.
+ Se tiene una red fat-tree de tres niveles donde cada nivel se conecta con
+ todos los switches del siguiente nivel.
+ El switch s1 se encuentra conectado a 3 hosts y los switches s4, s5, s6
+ y s7 se encuentran conectados a un host cada uno.
+ 
+\end_layout
+
+\begin_layout Subsection
+Controlador
+\end_layout
+
+\begin_layout Standard
+El controlador es el que permite que funcione el datacenter, ya que se encarga
+ de indicarle a cada switch cómo debe actuar cuando recibe un paquete.
+ Cuando un switch recibe un paquete, primero se fija si tiene alguna entrada
+ en su tabla que se corresponda con el flujo del paquete.
+ Si la hay, realiza la acción indicada en la tabla.
+ Si no la hay, le envía el paquete al controlador, que analizará el paquete
+ y decidirá por donde debe enviarlo el switch.
+ Luego, ingresará una nueva entrada en la tabla del switch correspondiente
+ al paquete, para que frente a futuros paquetes del mismo flujo el switch
+ sepa cómo actuar.
+\end_layout
+
+\begin_layout Standard
+La implementación del controlador se realizó utilizando la librería POX
+ en Python.
+ 
+\end_layout
+
+\begin_layout Standard
+Para ejecutar el controlador, se puede utilizar el siguiente comando (siempre
+ que el archivo controller.py se encuentre en la carpeta pox/ext/): 
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,basicstyle={\footnotesize\ttfamily},breaklines=true,tabsize=4,backgroundcolor={\color{lightgray}},frame=box"
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+
+./pox.py controller
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Configuración inicial del controlador
+\end_layout
+
+\begin_layout Standard
+Para que todo funcione correctamente, al ejecutar el controlador se inicializan
+ algunos módulos provistos por POX para poder realizar las operaciones.
+ Todo esto se realiza automáticamente en la función launch(), que se llama
+ al ejecutar el controlador.
+ A continuación enumeramos los módulos y explicaremos en qué se usan: 
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+Discovery
+\bar default
+: Este módulo se encarga de conocer toda la topología de la red, a través
+ del intercambio de mensajes LLDP entre switches.
+ Esto permitirá al controlador calcular todos los caminos posibles por los
+ que un switch puede enviar un paquete para alcanzar su destino.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+Host tracker
+\bar default
+: Este módulo se encarga de conocer todos los hosts que están en la red
+ y a que switch están conectados.
+ Dado que Discovery solo provee los switches de la red, era necesario contar
+ con una forma de conocer los hosts para que al recibir un paquete se pueda
+ conocer dónde se encuentra el host destino y así calcular el camino al
+ mismo.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+Spanning tree
+\bar default
+: Este módulo se encarga de correr el algoritmo de spanning tree para generar
+ un árbol sin ciclos entre los switches, y bloquear los puertos que no pertenece
+n al árbol al hacer un flooding de algún paquete.
+ Aclaración: El flooding de paquetes, y por lo tanto el resultado del algoritmo
+ spanning tree, solo se utilizará para los mensajes ARP, ya que tienen como
+ dirección destino la correspondiente al multicast, o en algún caso particular
+ en el que el host tracker no conozca el host destino.
+ Para todos los demás casos, no se tendrá en cuenta el resultado del algoritmo.
+ 
+\end_layout
+
+\begin_layout Standard
+Como se explicó en el último punto, en la simulación de mininet se generan
+ mensajes ARP con dirección destino multicast, para que se puedan conocer
+ las direcciones MAC de las IP.
+ Para evitar que estos mensajes lleguen al controlador, en el momento en
+ que un switch se conecta se le instala una entrada en la tabla para que
+ haga un flooding automáticamente de estos paquetes.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Direccionamiento de paquetes
+\end_layout
+
+\begin_layout Standard
+Como se explicó anteriormente, cuando un switch recibe un paquete y no tiene
+ una entrada en su tabla que le indique como actuar, le delega la responsabilida
+d al controlador.
+ Por lo tanto, el controlador debe decidir cómo realizar el direccionamiento
+ de paquetes.
+\end_layout
+
+\begin_layout Standard
+Cuando el controlador recibe un paquete, lo primero que hace es ver si conoce
+ al destino.
+ Si por alguna razón no se conoce al destino, no queda otra opción que hacer
+ flooding del paquete.
+ 
+\end_layout
+
+\begin_layout Standard
+Si se conoce al destino, pueden ocurrir dos situaciones:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+
+Que el switch actual esté conectado al host destino, en este caso lo único
+ que se hace es enviar el paquete al host por el puerto donde está conectado.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+
+Que el switch actual no esté conectado al host destino, en cuyo caso hay
+ que calcular los caminos que puede tomar el paquete y elegir uno.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para calcular los caminos posibles que puede tomar un paquete para llegar
+ al destino, se realiza el siguiente algoritmo: 
+\end_layout
+
+\begin_layout Enumerate
+Inicializar i en 1.
+\end_layout
+
+\begin_layout Enumerate
+Calcular todos los caminos que existen de longitud i, partiendo desde el
+ switch origen.
+\end_layout
+
+\begin_layout Enumerate
+Si no hay ningún camino de longitud i que finalice en el destino, volver
+ al paso 2 con i + 1.
+\end_layout
+
+\begin_layout Enumerate
+Filtrar todos los caminos para quedarse únicamente con los caminos que finalicen
+ en el destino.
+ 
+\end_layout
+
+\begin_layout Standard
+Una vez que se obtienen todos los caminos mínimos posibles, se elige uno
+ (ver siguiente sección).
+ Por último, se crea una entrada en la tabla del switch para el flujo del
+ paquete, para que paquetes del mismo flujo sigan el mismo camino.
+ 
+\end_layout
+
+\begin_layout Standard
+Se considera como flujo de un paquete al conjunto IP origen + IP destino
+ + protocolo + puerto origen + puerto destino.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Balance de carga
+\end_layout
+
+\begin_layout Standard
+Cuando hay múltiples caminos posibles para enviar un paquete, el controlador
+ debe decidir cuál de ellos usar, asegurándose de que se vayan usando todos
+ los enlaces disponibles para aprovechar al máximo la topología.
+ Esto es lo que se denomina como balance de carga.
+ 
+\end_layout
+
+\begin_layout Standard
+Para asegurarnos que el controlador vaya distribuyendo los flujos por los
+ distintos enlaces, mantendremos para cada puerto del switch un contador,
+ indicando cuántas veces se utilizó ese puerto.
+ De esta forma, el controlador elegirá el camino cuyo puerto de salida sea
+ el que menos veces se ha utilizado.
+ 
+\end_layout
+
+\begin_layout Subsection
+Firewall 
+\end_layout
+
+\begin_layout Standard
+El firewall es el encargado de mitigar los ataques de DOS.
+ Se entiende por ataque de DOS cuando se recibe una cantidad considerable
+ de paquetes en un determinado periodo de tiempo.
+ 
+\end_layout
+
+\begin_layout Standard
+Cuando el firewall determina que hay un ataque de DOS hacia un host destino,
+ lo que hará es descartar todos los paquetes UDP que se dirijan hacia ese
+ destino.
+ Para ello, insertará en la tabla de todos los switches una entrada que
+ le indique al switch que debe descartar el paquete UDP.
+ 
+\end_layout
+
+\begin_layout Standard
+Cuando se determina que el ataque término, se eliminara esa entrada de todas
+ las tablas para que se permita nuevamente el flujo normal de paquetes UDP.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Detectar inicio de ataques DOS
+\end_layout
+
+\begin_layout Standard
+Para detectar los ataques DOS, el firewall usará los datos estadísticos
+ de las entradas en las tablas de los switches, en particular el dato de
+ cuántos paquetes se enviaron con cada flujo.
+ Para ello, cada cierto tiempo el controlador solicitará a los switches
+ que le envíen las estadísticas y comparará la cantidad de paquetes UDP
+ enviados en ese switch en ese periodo con la cantidad enviada en el periodo
+ anterior.
+ Si en algún switch esa diferencia es mayor al límite predefinido, entonces
+ se determina que la red se encuentra bajo un ataque de DOS.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Detectar fin de ataques DOS 
+\end_layout
+
+\begin_layout Standard
+Mientras la red se encuentre bajo ataque, el firewall continuará chequeando
+ los datos estadísticos de las tablas de los switches.
+ Cuando en todos los switches la cantidad de paquetes UDP sea menor al límite,
+ entonces se procederá a desbloquear los flujos UDP.
+ Sin embargo, no se desbloqueará inmediatamente, deben pasar por lo menos
+ 5 periodos seguidos donde la cantidad de paquetes sea baja para que se
+ desbloqueen los flujos UDP.
+ El contador de periodos se reiniciará cada vez que se detecte una alta
+ tasa de paquetes UDP.
+ 
+\end_layout
+
+\begin_layout Section
+Pruebas realizadas
+\end_layout
+
+\begin_layout Subsection
+Ping
+\end_layout
+
+\begin_layout Standard
+La primer prueba realizada consiste en realizar un ping entre todos los
+ hosts.
+ La idea es comprobar que el controlador direcciona correctamente los paquetes
+ ICMP para que lleguen al destino.
+ Cuando un ping entre dos hosts es exitoso, significa que los paquetes pudieron
+ enviarse y recibirse en ambos sentidos.
+ Si algún ping falla, la prueba se considera fallida.
+ 
+\end_layout
+
+\begin_layout Standard
+En el primer ping se comprobó que todos los hosts pudieron comunicarse con
+ todos y no hubo pérdida de paquetes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_1.png
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Primer pingall
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se puede observar que el tiempo que llevó es bastante alto.
+ Esto es así porque ningún switch tenía entradas en su tabla, por lo que
+ todos los paquetes tuvieron que pasar por el controlador para que calcule
+ el camino y llene las tablas.
+ 
+\end_layout
+
+\begin_layout Standard
+Para comprobarlo, corrimos nuevamente el comando, y como ahora las tablas
+ estaban llenas, se realizó mucho más rápido porque el controlador no intervino.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_2.png
+	width 40page%
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_3.png
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Segundo pingall
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para estar seguros de que funciona todo, probamos realizar el ping en una
+ topología de 4 niveles, ya que tiene muchos más switches, y por lo tanto
+ más caminos posibles y más hosts: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall2_1.png
+	width 40page%
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall2_2.png
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pingall en topología de 4 niveles
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este caso es aún más notorio el hecho de que se llena la tabla de los
+ switches, y se ve en la diferencia entre el tiempo del primer ping y el
+ segundo.
+ 
+\end_layout
+
+\begin_layout Subsection
+Uso de todos los enlaces
+\end_layout
+
+\begin_layout Standard
+Como se explicó en secciones anteriores, el controlador debe asegurarse
+ de distribuir los flujos de paquetes en los distintos enlaces.
+ Por lo tanto, debemos asegurarnos que se usen todos los puertos.
+\end_layout
+
+\begin_layout Standard
+Para eso, aprovechando que el controlador guarda la cantidad de veces que
+ se usa cada puerto del switch, utilizamos esa información para ir chequeando
+ cada cierto tiempo la cantidad de puertos usados.
+ La información del uso de los puertos se muestra a través de los logs.
+ 
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Puertos-usados-al"
+
+\end_inset
+
+ se observa que al iniciar la red ningún puerto se encuentra en uso debido
+ a que no se ha mandado ningún mensaje.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ports/ports1.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Puertos-usados-al"
+
+\end_inset
+
+Puertos usados al inicio de la red
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A medida que vamos haciendo algunos pings, la cantidad de puertos usados
+ va aumentando.
+ Esto se puede observar en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Utilización-de-puertos"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ports/ports2.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Utilización-de-puertos"
+
+\end_inset
+
+Utilización de puertos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por último, cuando se realizan todos los pings, todos los puertos de todos
+ los switches están en uso:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ports/ports3.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Utilización de todos los puertos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, podemos confirmar que el controlador distribuye la carga en
+ los distintos enlaces y no usa el árbol obtenido con el spanning tree.
+ 
+\end_layout
+
+\begin_layout Subsection
+Wireshark 
+\end_layout
+
+\begin_layout Standard
+Utilizaremos el programa wireshark para comprobar que todos los paquetes
+ del mismo flujo sigan el mismo camino y pasen por los mismos switches.
+ Observando la figura de la topología, se puede ver que cualquier paquete
+ enviado desde un host cliente hacia un host servidor pasa por el switch
+ numero 1, y desde ahi siempre tiene dos opciones, ir al switch 2 o ir al
+ switch 3.
+ En todos los casos ambos switches permiten al paquete llegar al destino.
+\end_layout
+
+\begin_layout Standard
+Para comprobar que para un mismo flujo siempre se usa el mismo camino, realizare
+mos un ping entre un host cliente y un host servidor, utilizaremos wireshark
+ en las interfaces de entrada tanto del switch 2 como del switch 3, y comprobare
+mos que en una de las dos interfaces no habrá ningún paquete icmp.
+ 
+\end_layout
+
+\begin_layout Standard
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Paquetes-ICMP-en"
+
+\end_inset
+
+ muestra la salida del wireshark con filtro en paquetes icmp para el switch
+ 2:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/wireshark/wireshark s2.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Paquetes-ICMP-en"
+
+\end_inset
+
+Paquetes ICMP en S2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Paquetes-ICMP-en-1"
+
+\end_inset
+
+ muestra la salida del wireshark con filtro en paquetes icmp para el switch
+ 3:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/wireshark/wireshark s3.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Paquetes-ICMP-en-1"
+
+\end_inset
+
+Paquetes ICMP en S3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se puede confirmar que los paquetes siempre toman el mismo camino, y en
+ este caso el controlador decidió que sea a través del switch 2.
+\end_layout
+
+\begin_layout Subsection
+Iperf TCP
+\end_layout
+
+\begin_layout Standard
+Esta prueba consiste en realizar una conexión TCP entre un host cliente
+ y un host servidor, y comprobar que la transferencia de mensajes entre
+ ellos es exitosa.
+ Para eso, se utilizará el programa Iperf para establecer una conexión TCP
+ entre ambos hosts.
+ 
+\end_layout
+
+\begin_layout Standard
+Cliente: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf tcp/iperf tcp client.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cliente"
+
+\end_inset
+
+Cliente
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Servidor: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf tcp/iperf tcp server.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Servidor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se ve, la conexión fue exitosa y se pudieron comunicar ambos hosts.
+ 
+\end_layout
+
+\begin_layout Standard
+Al igual que el caso anterior, utilizamos wireshark para comprobar que todos
+ los mensajes de la conexión (que pertenecen al mismo flujo) sigan el mismo
+ camino.
+\end_layout
+
+\begin_layout Standard
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Paquetes-TCP-en"
+
+\end_inset
+
+ muestra la salida del wireshark con filtro en paquetes tcp para el switch
+ 2: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf tcp/tcp s2.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Paquetes-TCP-en"
+
+\end_inset
+
+Paquetes TCP en S2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Paquetes-TCP-en-1"
+
+\end_inset
+
+ muestra la salida del wireshark con filtro en paquetes tcp para el switch
+ 3: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf tcp/tcp s3.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Paquetes-TCP-en-1"
+
+\end_inset
+
+Paquetes TCP en S3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otra vez se puede confirmar que todos los paquetes del flujo siguen el mismo
+ camino.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Iperf UDP
+\end_layout
+
+\begin_layout Standard
+Con las pruebas UDP comprobaremos por un lado que los datagramas puedan
+ ser enviados entre dos hosts, y por otro lado que el firewall funcione
+ correctamente y bloquee los paquetes UDP si la tasa de paquetes es muy
+ alta.
+\end_layout
+
+\begin_layout Subsubsection
+UDP sin bloqueo de firewall
+\end_layout
+
+\begin_layout Standard
+En este caso se enviará un datagrama desde un host cliente hacia un host
+ servidor.
+ El resultado debería ser que el servidor recibió correctamente el datagrama.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf udp/iperf udp 1datagram.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Envío-de-un"
+
+\end_inset
+
+Envío de un datagrama UDP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Envío-de-un"
+
+\end_inset
+
+ se puede ver el reporte del servidor en el cual se indica que el datagrama
+ se recibió correctamente.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+UDP con bloqueo de firewall
+\end_layout
+
+\begin_layout Standard
+En este caso se enviará una cantidad alta de datagramas, por lo que el firewall
+ debería detectar el ataque DOS y bloquear todos los paquetes UDP.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf udp/iperf udp.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Envío-de-893"
+
+\end_inset
+
+Envío de 893 datagramas UDP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se observar en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Envío-de-893"
+
+\end_inset
+
+, no hay reporte del servidor.
+ Esto es porque no recibió los 893 datagramas que el cliente envió.
+ Por lo tanto, podemos confirmar que el firewall bloquea correctamente los
+ paquetes UDP.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Datagramas-recibidos-antes"
+
+\end_inset
+
+ se puede comprobar que efectivamente el servidor no recibe todos los datagramas
+, sino que recibe solamente los primeros 360.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/iperf udp/iperf udp blocking.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Datagramas-recibidos-antes"
+
+\end_inset
+
+Datagramas recibidos antes del bloqueo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusiones 
+\end_layout
+
+\begin_layout Standard
+Con la realización de este trabajo pudimos observar las ventajas que trae
+ la utilización de switches OpenFlow.
+ Mediante el uso de un controlador, se pueden establecer reglas para aplicar
+ en caso de ataques de forma rápida, sencilla y automática, pudiendo generar
+ así un firewall inteligente y que además puede ser modificado o adaptado
+ de forma sencilla a toda la red.
+ Se pueden establecer reglas para mitigar las congestiones obteniendo así
+ un mejor aprovechamiento de la red, realizando balance de carga entre los
+ distintos enlaces disponibles.
+ También, al no utilizar spanning tree de forma permanente (solo se usa
+ para los mensajes multicast), se tienen todos los enlaces disponibles por
+ lo que la red se puede aprovechar en su totalidad pudiendo disminuir la
+ congestión y optimizar el tráfico.
+ 
+\end_layout
+
+\begin_layout Standard
+Por otro lado, aunque no se realizó en este trabajo, se podría realizar
+ ingeniería de tráfico muy fácilmente, de forma similar a lo realizado para
+ el balance de carga, ya que el controlador puede analizar cada flujo de
+ paquetes por separados e indicar distintas acciones para cada uno.
+ 
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, se puede concluir que el uso de SDN permite mejorar el rendimiento
+ de las redes, aumentar su seguridad y aplicar cambios o nuevas políticas
+ de forma rápida y sencilla a toda la red o parte de la red.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Anexos (Código) 
+\end_layout
+
+\begin_layout Subsection
+Archivo topo.py 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\footnotesize\ttfamily},breaklines=true,tabsize=4,keywordstyle={\color{blue}},commentstyle={\color{green}},backgroundcolor={\color{lightgray}},frame=box"
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+from mininet.topo import Topo
+\end_layout
+
+\begin_layout Plain Layout
+import sys
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+class MyTopo(Topo):
+\end_layout
+
+\begin_layout Plain Layout
+    def __init__(self, levels=3, hosts=3):
+\end_layout
+
+\begin_layout Plain Layout
+        # Initialize topology
+\end_layout
+
+\begin_layout Plain Layout
+        Topo.__init__(self)
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        switches = {}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        switch_number = 1
+\end_layout
+
+\begin_layout Plain Layout
+        host_number = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #Add client hosts
+\end_layout
+
+\begin_layout Plain Layout
+        switches[0] = []
+\end_layout
+
+\begin_layout Plain Layout
+        for host in range(hosts):
+\end_layout
+
+\begin_layout Plain Layout
+            name = 'h' + str(host_number)
+\end_layout
+
+\begin_layout Plain Layout
+            switches[0].append(self.addHost(name))
+\end_layout
+
+\begin_layout Plain Layout
+            host_number += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #Add switches
+\end_layout
+
+\begin_layout Plain Layout
+        for level in range(levels):
+\end_layout
+
+\begin_layout Plain Layout
+            switch_count = 2 ** level
+\end_layout
+
+\begin_layout Plain Layout
+            switches[level+1] = []
+\end_layout
+
+\begin_layout Plain Layout
+            for switch in range(switch_count):
+\end_layout
+
+\begin_layout Plain Layout
+                name = 's' + str(switch_number)
+\end_layout
+
+\begin_layout Plain Layout
+                addedSwitch = self.addSwitch(name)
+\end_layout
+
+\begin_layout Plain Layout
+                switches[level+1].append(addedSwitch)
+\end_layout
+
+\begin_layout Plain Layout
+                switch_number += 1
+\end_layout
+
+\begin_layout Plain Layout
+                for link in switches[level]:
+\end_layout
+
+\begin_layout Plain Layout
+                    self.addLink(addedSwitch, link)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #Add server hosts
+\end_layout
+
+\begin_layout Plain Layout
+        for switch in switches[levels]:
+\end_layout
+
+\begin_layout Plain Layout
+            name = 'h' + str(host_number)
+\end_layout
+
+\begin_layout Plain Layout
+            host = self.addHost(name)
+\end_layout
+
+\begin_layout Plain Layout
+            host_number += 1
+\end_layout
+
+\begin_layout Plain Layout
+            self.addLink(switch, host)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+topos = {'topo': (lambda levels=3, hosts=3: MyTopo(levels=levels, hosts=hosts))}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Archivo controller.py
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python,numbers=left,basicstyle={\footnotesize\ttfamily},breaklines=true,tabsize=4,keywordstyle={\color{blue}},commentstyle={\color{green}},backgroundcolor={\color{lightgray}},frame=box"
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+from pox.core import core
+\end_layout
+
+\begin_layout Plain Layout
+import pox.openflow.libopenflow_01 as of
+\end_layout
+
+\begin_layout Plain Layout
+import pox.lib.packet as pkt
+\end_layout
+
+\begin_layout Plain Layout
+from pox.lib.addresses import EthAddr, IPAddr
+\end_layout
+
+\begin_layout Plain Layout
+import pox.lib.util as poxutil
+\end_layout
+
+\begin_layout Plain Layout
+import pox.lib.packet as pkt
+\end_layout
+
+\begin_layout Plain Layout
+from pox.lib.revent import * 
+\end_layout
+
+\begin_layout Plain Layout
+import pox.lib.recoco as recoco  
+\end_layout
+
+\begin_layout Plain Layout
+from pox.openflow.discovery import Discovery
+\end_layout
+
+\begin_layout Plain Layout
+from pox.lib.util import dpidToStr
+\end_layout
+
+\begin_layout Plain Layout
+from pox.lib.recoco import Timer
+\end_layout
+
+\begin_layout Plain Layout
+from pox.host_tracker import host_tracker
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+# Create a logger for this component
+\end_layout
+
+\begin_layout Plain Layout
+log = core.getLogger()
+\end_layout
+
+\begin_layout Plain Layout
+ports_used = {}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+class MyController(EventMixin):
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def __init__ (self):
+\end_layout
+
+\begin_layout Plain Layout
+        core.openflow.addListeners(self)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def _handle_ConnectionUp(self, event):
+\end_layout
+
+\begin_layout Plain Layout
+        #Flood multicast packets => arp
+\end_layout
+
+\begin_layout Plain Layout
+        log.info("Flooding multicast and arp packets in switch: " + dpidToStr(eve
+nt.connection.dpid))
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        #multicast
+\end_layout
+
+\begin_layout Plain Layout
+        msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.dl_dst = pkt.ETHER_BROADCAST
+\end_layout
+
+\begin_layout Plain Layout
+        msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+\end_layout
+
+\begin_layout Plain Layout
+        event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        #arp
+\end_layout
+
+\begin_layout Plain Layout
+        msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.dl_type = pkt.ethernet.ARP_TYPE
+\end_layout
+
+\begin_layout Plain Layout
+        msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+\end_layout
+
+\begin_layout Plain Layout
+        event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        #drop ipv6 packets because they are strange and broken
+\end_layout
+
+\begin_layout Plain Layout
+        msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.dl_type = pkt.ethernet.IPV6_TYPE
+\end_layout
+
+\begin_layout Plain Layout
+        event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        ports_used[event.dpid] = {}
+\end_layout
+
+\begin_layout Plain Layout
+        for port in event.connection.ports:
+\end_layout
+
+\begin_layout Plain Layout
+            ports_used[event.dpid][port] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def _handle_PacketIn(self, event):
+\end_layout
+
+\begin_layout Plain Layout
+        """ Packet processing """
+\end_layout
+
+\begin_layout Plain Layout
+        packet = event.parsed
+\end_layout
+
+\begin_layout Plain Layout
+        dpid = event.connection.dpid
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        eth_packet = packet.find(pkt.ethernet)
+\end_layout
+
+\begin_layout Plain Layout
+        ip_packet = packet.find(pkt.ipv4)
+\end_layout
+
+\begin_layout Plain Layout
+        icmp_packet = packet.find(pkt.icmp)
+\end_layout
+
+\begin_layout Plain Layout
+        tcp_packet = packet.find(pkt.tcp)
+\end_layout
+
+\begin_layout Plain Layout
+        udp_packet = packet.find(pkt.udp)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        if icmp_packet is None and tcp_packet is None and udp_packet is
+ None:
+\end_layout
+
+\begin_layout Plain Layout
+            return
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        def flood():
+\end_layout
+
+\begin_layout Plain Layout
+            #Flood incoming packet if dst is not known yet
+\end_layout
+
+\begin_layout Plain Layout
+            #Do not update flow table
+\end_layout
+
+\begin_layout Plain Layout
+            log.info("Flooding packet in switch: " + dpidToStr(event.connection.dpi
+d) + " --- dst=" + str(eth_packet.dst))
+\end_layout
+
+\begin_layout Plain Layout
+            msg = of.ofp_packet_out()
+\end_layout
+
+\begin_layout Plain Layout
+            msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+\end_layout
+
+\begin_layout Plain Layout
+            msg.data = event.ofp
+\end_layout
+
+\begin_layout Plain Layout
+            msg.in_port = event.port
+\end_layout
+
+\begin_layout Plain Layout
+            event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        dstEntry = core.host_tracker.getMacEntry(eth_packet.dst)
+\end_layout
+
+\begin_layout Plain Layout
+        if dstEntry is None:
+\end_layout
+
+\begin_layout Plain Layout
+            return flood()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        log.info("Calculating packet path in switch: " + dpidToStr(event.connectio
+n.dpid) + " --- dst=" + str(eth_packet.dst))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        dst = dstEntry.dpid
+\end_layout
+
+\begin_layout Plain Layout
+        port = None
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        if (dst == dpid):
+\end_layout
+
+\begin_layout Plain Layout
+            #current switch is destination swith
+\end_layout
+
+\begin_layout Plain Layout
+            port = dstEntry.port
+\end_layout
+
+\begin_layout Plain Layout
+        else:
+\end_layout
+
+\begin_layout Plain Layout
+            #calculate all possible minnimum paths
+\end_layout
+
+\begin_layout Plain Layout
+            paths = [[neighbour] for neighbour in self.getNeighbours(dpid)]
+\end_layout
+
+\begin_layout Plain Layout
+            dsts = self.getPathsToDst(paths, dst)
+\end_layout
+
+\begin_layout Plain Layout
+            while not dsts:
+\end_layout
+
+\begin_layout Plain Layout
+                #for each iteration, calculates all paths from src which
+ has length n
+\end_layout
+
+\begin_layout Plain Layout
+                #if any of those paths end in dst, finish while
+\end_layout
+
+\begin_layout Plain Layout
+                oldPaths = paths
+\end_layout
+
+\begin_layout Plain Layout
+                paths = []
+\end_layout
+
+\begin_layout Plain Layout
+                for path in oldPaths:
+\end_layout
+
+\begin_layout Plain Layout
+                    neighbours = self.getNeighbours(path[-1].dpid2)
+\end_layout
+
+\begin_layout Plain Layout
+                    for neighbour in neighbours:
+\end_layout
+
+\begin_layout Plain Layout
+                        paths.append(path + [neighbour])
+\end_layout
+
+\begin_layout Plain Layout
+                dsts = self.getPathsToDst(paths, dst)
+\end_layout
+
+\begin_layout Plain Layout
+            
+\end_layout
+
+\begin_layout Plain Layout
+            if len(dsts) == 0:
+\end_layout
+
+\begin_layout Plain Layout
+                return
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+            else:
+\end_layout
+
+\begin_layout Plain Layout
+                #dsts has all possible minimum paths to dst
+\end_layout
+
+\begin_layout Plain Layout
+                ports = [dstPath[0].port1 for dstPath in dsts]
+\end_layout
+
+\begin_layout Plain Layout
+                port = self.getLeastUsedPort(ports, dpid)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        text = "Making rule for sending packet in switch: " + dpidToStr(dpid)
+ + '
+\backslash
+n'
+\end_layout
+
+\begin_layout Plain Layout
+        text += "Ethernet: " + str(eth_packet.src) + " -> " + str(eth_packet.dst)
+ + '
+\backslash
+n'
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #update flow table
+\end_layout
+
+\begin_layout Plain Layout
+        msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.dl_type = eth_packet.type
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.nw_src = ip_packet.srcip
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.nw_dst = ip_packet.dstip
+\end_layout
+
+\begin_layout Plain Layout
+        msg.match.nw_proto = ip_packet.protocol
+\end_layout
+
+\begin_layout Plain Layout
+        text += "IPv4: " + str(ip_packet.srcip) + " -> " + str(ip_packet.dstip)
+\end_layout
+
+\begin_layout Plain Layout
+        if tcp_packet is not None:
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.tp_src = tcp_packet.srcport
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.tp_dst = tcp_packet.dstport
+\end_layout
+
+\begin_layout Plain Layout
+            text += "
+\backslash
+nTCP: " + str(tcp_packet.srcport) + " -> " + str(tcp_packet.dstport)
+\end_layout
+
+\begin_layout Plain Layout
+        if udp_packet is not None:
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.tp_src = udp_packet.srcport
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.tp_dst = udp_packet.dstport
+\end_layout
+
+\begin_layout Plain Layout
+            text += "
+\backslash
+nUDP: " + str(udp_packet.srcport) + " -> " + str(udp_packet.dstport)
+\end_layout
+
+\begin_layout Plain Layout
+        msg.actions.append(of.ofp_action_output(port = port))
+\end_layout
+
+\begin_layout Plain Layout
+        event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+        print text
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        ports_used[dpid][port] += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #send packet
+\end_layout
+
+\begin_layout Plain Layout
+        msg = of.ofp_packet_out()
+\end_layout
+
+\begin_layout Plain Layout
+        msg.actions.append(of.ofp_action_output(port = port))
+\end_layout
+
+\begin_layout Plain Layout
+        msg.data = event.ofp
+\end_layout
+
+\begin_layout Plain Layout
+        msg.in_port = event.port
+\end_layout
+
+\begin_layout Plain Layout
+        event.connection.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def getNeighbours(self, dpid):
+\end_layout
+
+\begin_layout Plain Layout
+        """Returns all neighbours of switch with dpid"""
+\end_layout
+
+\begin_layout Plain Layout
+        neighbours = []
+\end_layout
+
+\begin_layout Plain Layout
+        for adjacency in core.openflow_discovery.adjacency:
+\end_layout
+
+\begin_layout Plain Layout
+            if adjacency.dpid1 == dpid:
+\end_layout
+
+\begin_layout Plain Layout
+                neighbours.append(adjacency)
+\end_layout
+
+\begin_layout Plain Layout
+        return neighbours
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def getPathsToDst(self, paths, dst):
+\end_layout
+
+\begin_layout Plain Layout
+        """Returns all paths from list which end with dst"""
+\end_layout
+
+\begin_layout Plain Layout
+        dstPaths = []
+\end_layout
+
+\begin_layout Plain Layout
+        for path in paths:
+\end_layout
+
+\begin_layout Plain Layout
+            if path[-1].dpid2 == dst:
+\end_layout
+
+\begin_layout Plain Layout
+                dstPaths.append(path)
+\end_layout
+
+\begin_layout Plain Layout
+        return dstPaths
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def getLeastUsedPort(self, ports, dpid):
+\end_layout
+
+\begin_layout Plain Layout
+        minUses = float('Inf')
+\end_layout
+
+\begin_layout Plain Layout
+        minPort = 0
+\end_layout
+
+\begin_layout Plain Layout
+        for port in ports:
+\end_layout
+
+\begin_layout Plain Layout
+            uses = ports_used[dpid][port]
+\end_layout
+
+\begin_layout Plain Layout
+            if uses < minUses:
+\end_layout
+
+\begin_layout Plain Layout
+                minUses = uses
+\end_layout
+
+\begin_layout Plain Layout
+                minPort = port
+\end_layout
+
+\begin_layout Plain Layout
+        return minPort
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+class MyFirewall(EventMixin):
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    udp_max_packet = 100
+\end_layout
+
+\begin_layout Plain Layout
+    udp_max_block_time = 5
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def __init__(self):
+\end_layout
+
+\begin_layout Plain Layout
+        core.openflow.addListeners(self)
+\end_layout
+
+\begin_layout Plain Layout
+        core.openflow.addListenerByName("FlowStatsReceived", self.handle_flow_stats
+)
+\end_layout
+
+\begin_layout Plain Layout
+        self.udp_packets = {}
+\end_layout
+
+\begin_layout Plain Layout
+        self.udp_packet_count = {}
+\end_layout
+
+\begin_layout Plain Layout
+        self.blocked = {}
+\end_layout
+
+\begin_layout Plain Layout
+        self.unblockTried = set()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        #Check stats every 5 seconds
+\end_layout
+
+\begin_layout Plain Layout
+        Timer(5, self.requestStats, recurring = True)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def handle_flow_stats(self, event):
+\end_layout
+
+\begin_layout Plain Layout
+        #Check udp packets sent based in flow table statistics
+\end_layout
+
+\begin_layout Plain Layout
+        dpid = event.dpid
+\end_layout
+
+\begin_layout Plain Layout
+        self.udp_packets[dpid] = {}
+\end_layout
+
+\begin_layout Plain Layout
+        flow_packets = {}
+\end_layout
+
+\begin_layout Plain Layout
+        for flow in event.stats:
+\end_layout
+
+\begin_layout Plain Layout
+            ip = flow.match.nw_dst
+\end_layout
+
+\begin_layout Plain Layout
+            if ip is not None and flow.match.nw_proto == pkt.ipv4.UDP_PROTOCOL:
+\end_layout
+
+\begin_layout Plain Layout
+                #Count packets sent for each udp flow table entry
+\end_layout
+
+\begin_layout Plain Layout
+                flow_packets[ip] = flow_packets.get(ip, 0) + flow.packet_count
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        for ip in flow_packets.keys():
+\end_layout
+
+\begin_layout Plain Layout
+            #Packets sent in this period is calculated
+\end_layout
+
+\begin_layout Plain Layout
+            #Total udp packets sent - last period udp packets sent
+\end_layout
+
+\begin_layout Plain Layout
+            packets = flow_packets[ip] - self.udp_packet_count.get(dpid, {}).get(ip
+, 0)
+\end_layout
+
+\begin_layout Plain Layout
+            if packets:
+\end_layout
+
+\begin_layout Plain Layout
+                self.udp_packets[dpid][ip] = packets
+\end_layout
+
+\begin_layout Plain Layout
+                if packets > self.udp_max_packet:
+\end_layout
+
+\begin_layout Plain Layout
+                    self.blockUdp(ip)
+\end_layout
+
+\begin_layout Plain Layout
+                else:
+\end_layout
+
+\begin_layout Plain Layout
+                    self.unblockUdp(ip)
+\end_layout
+
+\begin_layout Plain Layout
+        
+\end_layout
+
+\begin_layout Plain Layout
+        for ip in self.blocked.keys():
+\end_layout
+
+\begin_layout Plain Layout
+            #If ip is blocked and does not have new packets sent, try to
+ unblock
+\end_layout
+
+\begin_layout Plain Layout
+            if not ip in self.udp_packets[dpid].keys():
+\end_layout
+
+\begin_layout Plain Layout
+                self.unblockUdp(ip)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        self.udp_packet_count[dpid] = flow_packets
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def blockUdp(self, ip):
+\end_layout
+
+\begin_layout Plain Layout
+        #Blocks Udp packets in all switches
+\end_layout
+
+\begin_layout Plain Layout
+        blocks = self.blocked.get(ip, 0)
+\end_layout
+
+\begin_layout Plain Layout
+        if not blocks:
+\end_layout
+
+\begin_layout Plain Layout
+            msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.dl_type = pkt.ethernet.IP_TYPE
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
+\end_layout
+
+\begin_layout Plain Layout
+            msg.match.nw_dst = ip
+\end_layout
+
+\begin_layout Plain Layout
+            msg.priority = of.OFP_DEFAULT_PRIORITY + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+            for con in core.openflow.connections:
+\end_layout
+
+\begin_layout Plain Layout
+                con.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+                
+\end_layout
+
+\begin_layout Plain Layout
+            
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        log.info("Blocking UDP flows for ip dst " + str(ip))
+\end_layout
+
+\begin_layout Plain Layout
+        self.blocked[ip] = self.udp_max_block_time
+\end_layout
+
+\begin_layout Plain Layout
+        self.unblockTried.add(ip)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def unblockUdp(self, ip):
+\end_layout
+
+\begin_layout Plain Layout
+        if ip in self.unblockTried:
+\end_layout
+
+\begin_layout Plain Layout
+            return
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        blocks = self.blocked.get(ip, 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        if blocks:
+\end_layout
+
+\begin_layout Plain Layout
+            self.unblockTried.add(ip)
+\end_layout
+
+\begin_layout Plain Layout
+            log.info("Trying to unblock UDP flows for ip dst " + str(ip)
+ + " : " + str(blocks))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+            if blocks == 1:
+\end_layout
+
+\begin_layout Plain Layout
+                #It was blocked for self.udp_max_block_time periods
+\end_layout
+
+\begin_layout Plain Layout
+                msg = of.ofp_flow_mod()
+\end_layout
+
+\begin_layout Plain Layout
+                msg.match.dl_type = pkt.ethernet.IP_TYPE
+\end_layout
+
+\begin_layout Plain Layout
+                msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
+\end_layout
+
+\begin_layout Plain Layout
+                msg.match.nw_dst = ip
+\end_layout
+
+\begin_layout Plain Layout
+                msg.command = of.OFPFC_DELETE
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+                log.info("Unblocking UDP flows for ip dst " + str(ip))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+                for con in core.openflow.connections:
+\end_layout
+
+\begin_layout Plain Layout
+                    con.send(msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+            self.blocked[ip] = blocks - 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def requestStats(self):
+\end_layout
+
+\begin_layout Plain Layout
+        #Requests udp statistics from the switch that is connected to clients
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        self.unblockTried = set()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+        for connection in core.openflow.connections:
+\end_layout
+
+\begin_layout Plain Layout
+            connection.send(of.ofp_stats_request(body=of.ofp_flow_stats_request()))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+class MyPortStats(EventMixin):
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def __init__(self):
+\end_layout
+
+\begin_layout Plain Layout
+        #Check port stats every 30 seconds
+\end_layout
+
+\begin_layout Plain Layout
+        Timer(30, self.check_use_of_ports, recurring = True)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    def check_use_of_ports(self):
+\end_layout
+
+\begin_layout Plain Layout
+        for connection in core.openflow.connections:
+\end_layout
+
+\begin_layout Plain Layout
+            switch_ports_used = 0
+\end_layout
+
+\begin_layout Plain Layout
+            switch_ports_total = 0
+\end_layout
+
+\begin_layout Plain Layout
+            dpid = connection.dpid
+\end_layout
+
+\begin_layout Plain Layout
+            for port in connection.ports:
+\end_layout
+
+\begin_layout Plain Layout
+                if port != of.OFPP_LOCAL:
+\end_layout
+
+\begin_layout Plain Layout
+                    switch_ports_total += 1
+\end_layout
+
+\begin_layout Plain Layout
+                    if ports_used[dpid][port] > 0:
+\end_layout
+
+\begin_layout Plain Layout
+                        switch_ports_used += 1
+\end_layout
+
+\begin_layout Plain Layout
+            if switch_ports_total == switch_ports_used:
+\end_layout
+
+\begin_layout Plain Layout
+                text = "All ports used"
+\end_layout
+
+\begin_layout Plain Layout
+            else:
+\end_layout
+
+\begin_layout Plain Layout
+                text = "Ports used: " + str(switch_ports_used) + "/" + str(switc
+h_ports_total)
+\end_layout
+
+\begin_layout Plain Layout
+            log.info("Switch " + dpidToStr(dpid) + ": " + text)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+def launch ():
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.log.color
+\end_layout
+
+\begin_layout Plain Layout
+    pox.log.color.launch()
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.log
+\end_layout
+
+\begin_layout Plain Layout
+    pox.log.launch(format="[@@@bold@@@level%(name)-22s@@@reset] " +
+\end_layout
+
+\begin_layout Plain Layout
+                        "@@@bold%(message)s@@@normal")
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.log.level
+\end_layout
+
+\begin_layout Plain Layout
+    import logging
+\end_layout
+
+\begin_layout Plain Layout
+    pox.log.level.launch(packet=logging.WARN, host_tracker=logging.INFO)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    from pox.core import core
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.openflow.discovery
+\end_layout
+
+\begin_layout Plain Layout
+    pox.openflow.discovery.launch()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    core.registerNew(MyController)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.openflow.spanning_tree
+\end_layout
+
+\begin_layout Plain Layout
+    pox.openflow.spanning_tree.launch()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    import pox.host_tracker
+\end_layout
+
+\begin_layout Plain Layout
+    pox.host_tracker.launch()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+    core.registerNew(MyFirewall)
+\end_layout
+
+\begin_layout Plain Layout
+    core.registerNew(MyPortStats)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Referencias
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://repositorio.unican.es/xmlui/bitstream/handle/10902/4484/Carlos%20Arteche%
+ 20Gonzalez.pdf;sequence=1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:narmox_spear"
+
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://demo.spear.narmox.com/app/?apiurl=demo#!/mininet
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://datapath.io/resources/blog/how-we-run-bgp-on-top-of-openflow/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://noxrepo.github.io/pox-doc/html/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
