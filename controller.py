@@ -24,10 +24,23 @@ class MyController(EventMixin):
 
     def _handle_ConnectionUp(self, event):
         #Flood multicast packets => arp
-        log.info("Flooding multicast packets in switch: " + dpidToStr(event.connection.dpid))
+        log.info("Flooding multicast and arp packets in switch: " + dpidToStr(event.connection.dpid))
+        
+        #multicast
         msg = of.ofp_flow_mod()
         msg.match.dl_dst = pkt.ETHER_BROADCAST
         msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+        event.connection.send(msg)
+        
+        #arp
+        msg = of.ofp_flow_mod()
+        msg.match.dl_type = pkt.ethernet.ARP_TYPE
+        msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+        event.connection.send(msg)
+        
+        #drop ipv6 packets because they are strange and broken
+        msg = of.ofp_flow_mod()
+        msg.match.dl_type = pkt.ethernet.IPV6_TYPE
         event.connection.send(msg)
 
         ports_used[event.dpid] = {}
@@ -42,22 +55,17 @@ class MyController(EventMixin):
 
         eth_packet = packet.find(pkt.ethernet)
         ip_packet = packet.find(pkt.ipv4)
-        ip6_packet = packet.find(pkt.ipv6)
-        arp_packet = packet.find(pkt.arp)
         icmp_packet = packet.find(pkt.icmp)
         tcp_packet = packet.find(pkt.tcp)
         udp_packet = packet.find(pkt.udp)
 
-        if icmp_packet is None and tcp_packet is None and udp_packet is None and arp_packet is None:
-            return
-        if ip6_packet is not None:
+        if icmp_packet is None and tcp_packet is None and udp_packet is None:
             return
 
         def flood():
             #Flood incoming packet if dst is not known yet
             #Do not update flow table
-            if (arp_packet is None):
-                log.info("Flooding packet in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
+            log.info("Flooding packet in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
             msg = of.ofp_packet_out()
             msg.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
             msg.data = event.ofp
@@ -66,7 +74,7 @@ class MyController(EventMixin):
 
 
         dstEntry = core.host_tracker.getMacEntry(eth_packet.dst)
-        if dstEntry is None or arp_packet is not None:
+        if dstEntry is None:
             return flood()
 
         log.info("Calculating packet path in switch: " + dpidToStr(event.connection.dpid) + " --- dst=" + str(eth_packet.dst))
@@ -219,10 +227,13 @@ class MyFirewall(EventMixin):
             msg.match.dl_type = pkt.ethernet.IP_TYPE
             msg.match.nw_proto = pkt.ipv4.UDP_PROTOCOL
             msg.match.nw_dst = ip
-            msg.command = of.OFPFC_MODIFY
+            msg.priority = of.OFP_DEFAULT_PRIORITY + 1
 
             for con in core.openflow.connections:
                 con.send(msg)
+
+                
+            
 
         log.info("Blocking UDP flows for ip dst " + str(ip))
         self.blocked[ip] = self.udp_max_block_time
