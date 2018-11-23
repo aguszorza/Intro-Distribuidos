@@ -1396,7 +1396,7 @@ Wireshark
 \end_layout
 
 \begin_layout Subsubsection
-Camino del flujo de paquetes
+Camino de un flujo
 \end_layout
 
 \begin_layout Standard
@@ -1404,7 +1404,7 @@ Utilizaremos el programa wireshark para comprobar que todos los paquetes
  del mismo flujo sigan el mismo camino y pasen por los mismos switches.
  Observando la figura de la topología, se puede ver que cualquier paquete
  enviado desde un host cliente hacia un host servidor pasa por el switch
- numero 1, y desde ahi siempre tiene dos opciones, ir al switch 2 o ir al
+ numero 1, y desde ahí siempre tiene dos opciones, ir al switch 2 o ir al
  switch 3.
  En todos los casos ambos switches permiten al paquete llegar al destino.
 \end_layout
@@ -1503,7 +1503,7 @@ reference "fig:Paquetes-ICMP-en-1"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1541,7 +1541,8 @@ Paquetes ICMP en S3
 
 \begin_layout Standard
 Se puede confirmar que los paquetes siempre toman el mismo camino, y en
- este caso el controlador decidió que sea a través del switch 2.
+ este caso el controlador decidió que sea a través del switch 2, ya que
+ en el switch 3 no se observa ningún paquete.
 \end_layout
 
 \begin_layout Standard
@@ -1925,6 +1926,22 @@ Como se ve, la conexión fue exitosa y se pudieron comunicar ambos hosts.
 Al igual que el caso anterior, utilizamos wireshark para comprobar que todos
  los mensajes de la conexión (que pertenecen al mismo flujo) sigan el mismo
  camino.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
