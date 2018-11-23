@@ -62,7 +62,7 @@ fixltx2e
 \pdf_bookmarksopenlevel 1
 \pdf_breaklinks false
 \pdf_pdfborder true
-\pdf_colorlinks true
+\pdf_colorlinks false
 \pdf_backref section
 \pdf_pdfusetitle true
 \pdf_quoted_options "linkcolor=black"
@@ -1048,7 +1048,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_1.png
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/ping1.png
 	width 40page%
 
 \end_inset
@@ -1096,14 +1096,14 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_2.png
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/ping2.png
 	width 40page%
 
 \end_inset
 
  
 \begin_inset Graphics
-	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall_3.png
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/ping3.png
 	width 40page%
 
 \end_inset
@@ -1160,14 +1160,14 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall2_1.png
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/ping2.1.png
 	width 40page%
 
 \end_inset
 
  
 \begin_inset Graphics
-	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/recortes/pingall2_2.png
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/ping/ping2.2.png
 	width 40page%
 
 \end_inset
@@ -1196,6 +1196,10 @@ Pingall en topología de 4 niveles
 En este caso es aún más notorio el hecho de que se llena la tabla de los
  switches, y se ve en la diferencia entre el tiempo del primer ping y el
  segundo.
+ 
+\end_layout
+
+\begin_layout Standard
  
 \end_layout
 
@@ -1391,6 +1395,10 @@ Por lo tanto, podemos confirmar que el controlador distribuye la carga en
 Wireshark 
 \end_layout
 
+\begin_layout Subsubsection
+Camino del flujo de paquetes
+\end_layout
+
 \begin_layout Standard
 Utilizaremos el programa wireshark para comprobar que todos los paquetes
  del mismo flujo sigan el mismo camino y pasen por los mismos switches.
@@ -1534,6 +1542,281 @@ Paquetes ICMP en S3
 \begin_layout Standard
 Se puede confirmar que los paquetes siempre toman el mismo camino, y en
  este caso el controlador decidió que sea a través del switch 2.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Balance de carga
+\end_layout
+
+\begin_layout Standard
+Utilizaremos el programa wireshark para comprobar que los switches realicen
+ balance de carga.
+ Como se mencionó anteriormente, todos los paquetes provenientes de h1,
+ h2 o h3 pasaran por el switch s1 y luego podrán ir por s2 o s3.
+ Por lo tanto, el switch s1 deberá realizar balance de carga puesto que
+ los pesos son iguales por ambos caminos.
+\end_layout
+
+\begin_layout Standard
+Para comprobar que el switch s1 realiza balance de carga, realizaremos por
+ un lado un ping entre el host h1 y el host h4, y por otro lado un ping
+ entre h2 y h4.
+ Utilizando wireshark en las interfaces de entrada de s2 y s3, comprobaremos
+ si el switch s1 realizó balance de carga.
+ 
+\end_layout
+
+\begin_layout Standard
+Las figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Balance-de-carga-paquetes"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Balance-de-carga-paquetes-2"
+
+\end_inset
+
+ muestra la salida del wireshark para el switch 2.
+ Se puede observar que los paquetes provenientes del host h1 pasaron por
+ el switch s2 mientras que los paquetes provenientes del host h2 no pasaron
+ por el switch s2.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/balance de carga/s2-src=h1.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Balance-de-carga-paquetes"
+
+\end_inset
+
+Balance de carga-paquetes en S2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/balance de carga/s2-src=h2.png
+	width 50page%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Balance-de-carga-paquetes-2"
+
+\end_inset
+
+Balance de carga-paquetes en S2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Balance-de-carga-paquetes-1"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Balance-de-carga-paquetes-1-1"
+
+\end_inset
+
+ muestra la salida del wireshark para el switch 3.
+ Se puede observar que, a diferencia del caso anterior, los paquetes proveniente
+s del host h1 no pasaron por el switch s3 mientras que los paquetes provenientes
+ del host h2 si pasaron por el switch s3.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/balance de carga/s3-src=h1.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Balance-de-carga-paquetes-1"
+
+\end_inset
+
+Balance de carga-paquetes en S3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/agustin/Escritorio/2 cuatri 2018/distribuidos/Intro-Distribuidos/images/balance de carga/s3-src=h2.png
+	width 50page%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Balance-de-carga-paquetes-1-1"
+
+\end_inset
+
+Balance de carga-paquetes en S3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, se puede confirmar que el switch s1 realizó balance de carga
+ para flujos distintos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
