@@ -378,7 +378,8 @@ Los switches son transparentes para la red mientras que los routers no.
 \end_layout
 
 \begin_layout Itemize
-Los routers tienen dirección IP, pero los switches no tienen dirección MAC.
+Los routers utilizan direcciones IP mientras que los switches utilizan las
+ direcciones MAC.
 \end_layout
 
 \begin_layout Itemize
@@ -458,7 +459,14 @@ Por un lado, el controlador debería analizar todos los mensajes BGP que
 
 De esta forma, a través del controlador se podrían realizar todas las decisiones
  que permite el protocolo BGP, como por ejemplo la discrecionalidad en los
- anuncios de prefijos o elegir un camino en base al local preference.
+ anuncios de prefijos o elegir un camino en base al local preference.[
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Openflow-BGP"
+
+\end_inset
+
+]
 \end_layout
 
 \begin_layout Subsection
@@ -808,7 +816,10 @@ Spanning tree
 : Este módulo se encarga de correr el algoritmo de spanning tree para generar
  un árbol sin ciclos entre los switches, y bloquear los puertos que no pertenece
 n al árbol al hacer un flooding de algún paquete.
- Aclaración: El flooding de paquetes, y por lo tanto el resultado del algoritmo
+\begin_inset Newline newline
+\end_inset
+
+Aclaración: El flooding de paquetes, y por lo tanto el resultado del algoritmo
  spanning tree, solo se utilizará para los mensajes ARP, ya que tienen como
  dirección destino la correspondiente al multicast, o en algún caso particular
  en el que el host tracker no conozca el host destino.
@@ -2052,7 +2063,7 @@ Paquetes TCP en S3
 
 \begin_layout Standard
 Otra vez se puede confirmar que todos los paquetes del flujo siguen el mismo
- camino.
+ camino, ya que no se observan paquetes en el switch s3.
 \end_layout
 
 \begin_layout Standard
@@ -2198,7 +2209,7 @@ Envío de 893 datagramas UDP
 \end_layout
 
 \begin_layout Standard
-Como se observar en la figura 
+Como se observa en la figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Envío-de-893"
@@ -4231,6 +4242,13 @@ http://demo.spear.narmox.com/app/?apiurl=demo#!/mininet
 \end_layout
 
 \begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Openflow-BGP"
+
+\end_inset
+
+
 \begin_inset Flex URL
 status collapsed
 
