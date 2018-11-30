@@ -369,17 +369,19 @@ Los switch son dispositivos de capa 2 mientras que los routers son dispositivos
 
 \begin_layout Itemize
 Los routers conectan dos redes distintas mientras que los switches son parte
- de un misma red.
+ de una misma red.
 \end_layout
 
 \begin_layout Itemize
-Los switches son transparentes para la red mientras que los routers no.
+Los routers utilizan direcciones IP para el direccionamiento, mientras que
+ los switches utilizan direcciones MAC.
  
 \end_layout
 
 \begin_layout Itemize
-Los routers utilizan direcciones IP mientras que los switches utilizan direccion
-es MAC.
+Los switches son transparentes para la red mientras que los routers no.
+ Esto significa que los routers poseen una dirección IP, pero los switches
+ no poseen dirección MAC.
 \end_layout
 
 \begin_layout Itemize
@@ -388,18 +390,17 @@ Como los switches son de capa 2, pueden realizar retransmisiones mientras
 \end_layout
 
 \begin_layout Itemize
+En ambos casos, los dispositivos tienen una tabla que utilizan para determinar
+ la interfaz de salida.
+\end_layout
+
+\begin_layout Itemize
 Cuando un paquete llega a un router y éste no sabe qué hacer con él (la
  dirección IP destino no matchea con ninguna entrada de la tabla), el router
  lo descarta.
  En cambio, si un frame llega a un switch y éste no sabe qué hacer (la dirección
  MAC destino no se encuentra en la tabla del switch), envía un mensaje broadcast
- a todos los dispositivos para detectar a qué switch enviarlo.
- 
-\end_layout
-
-\begin_layout Itemize
-En ambos casos, los dispositivos tienen una tabla que utilizan para determinar
- la interfaz de salida.
+ por todas las interfaces para que por alguna llegue al destino.
 \end_layout
 
 \end_deeper
